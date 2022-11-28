@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import classes.DBConnect;
+
 
 public class Main {
 
@@ -11,19 +13,20 @@ public class Main {
 
 
 		//		// Make DB connection
-		//		DBConnect myDBConnection = new DBConnect();
+			DBConnect myDBConnection = new DBConnect();
 		//
 		//		// DB test
 		//		myDBConnection.openDB();
 		//
-		//		// retrieve films to test
-		//		ArrayList<String> films = myDBConnection.getCategories();
+		//		retrieve films to test
+			//ArrayList<String> films = myDBConnection.getCategories();
+			myDBConnection.getFilmTitles();
 		//
 		//		// print loaded arrayList
-		//		for(String value: films)
-		//		{
-		//			System.out.println(value);
-		//		}
+			//			for(String value: films)
+			//			{
+			//				System.out.println(value);
+			//			}
 
 		Scanner userinput = new Scanner(System.in);
 		boolean exitProgram = false;
