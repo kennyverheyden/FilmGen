@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Film {
 
@@ -11,37 +12,63 @@ public class Film {
 	private String subject3;
 	private String verb;
 	private String location;
-	private String title;
-
-	public Film()
-	{
-		//Load testdata
-		hyperbolic="Fast-Paced";
-		story="Drama";
-		subject1="Mad Sientist";
-		subject2="Database Administrator";
-		subject3="Lumberjack";
-		verb="Sink";
-		location="The Canadian Rockies";
-	}
+	private String title; // full film title
 
 	// Make DB connection
 	DBConnect myDBConnection = new DBConnect();
 
 	// Tables of DB loaded separately in ArrayLists
-	ArrayList<String> categories = myDBConnection.getCategorie();
-	ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
-	ArrayList<String> languages = myDBConnection.getLanguages();
-	ArrayList<String> locations = myDBConnection.getLocations();
-	ArrayList<String> stories = myDBConnection.getStories();
-	ArrayList<String> subjects = myDBConnection.getSubjects();
-	ArrayList<String> verbs = myDBConnection.getVerbs();
-	ArrayList<String> words = myDBConnection.getVerbs();
+	private ArrayList<String> categories = myDBConnection.getCategorie();
+	private ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
+	private ArrayList<String> languages = myDBConnection.getLanguages();
+	private ArrayList<String> locations = myDBConnection.getLocations();
+	private ArrayList<String> stories = myDBConnection.getStories();
+	private ArrayList<String> subjects = myDBConnection.getSubjects();
+	private ArrayList<String> verbs = myDBConnection.getVerbs();
+	private ArrayList<String> words = myDBConnection.getVerbs();
+
+	public Film()
+	{
+	}
+
+	// random picker in the ArrayList
+	public int randomPicker(ArrayList obj)
+	{
+		Random rn = new Random();
+		int randomNum = rn.nextInt(obj.size());
+		return randomNum;
+	}
 
 	public void buildTitle() 
 	{
-		String title=  "A " +hyperbolic+ " " +story+ " of a "+subject1+" and a "+subject2+" who must "+verb+" a "+subject3+ " in "+location; 
-		System.out.println(title);
+		// assign random content to fields
+		hyperbolic=hyperbolics.get(randomPicker(hyperbolics));
+		story=stories.get(randomPicker(stories));
+		subject1=subjects.get(randomPicker(subjects));
+		subject2=subjects.get(randomPicker(subjects));
+		subject3=subjects.get(randomPicker(subjects));
+		verb=verbs.get(randomPicker(verbs));
+		location=locations.get(randomPicker(locations));
+
+		//  build the string with the fields in the template string
+		String title=  "   A " +hyperbolic+ " " +story+ " of a "+subject1+" and a "+subject2+" who must "+verb+" a "+subject3+ " in "+location; 
+
+		// show on the screen
+		System.out.println("\n   Generated film title:");
+		printFormattingLine(title.length());
+		System.out.println(title); // print the title
+		printFormattingLine(title.length());
+		System.out.println();
+	}
+
+	public void printFormattingLine(int length) // take e.g string.length() 
+	{
+		System.out.print("  "); // formatting: add extra space before line
+		for(int i=0;i<length-1;i++)
+		{
+			System.out.print("-");	
+		}
+		System.out.println(); // new line
 	}
 
 }

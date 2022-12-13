@@ -11,22 +11,18 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-
 		Scanner userinput = new Scanner(System.in);
 		boolean exitProgram = false;
 		char userChose=' ';
 		Film film = new Film();
 
-		
 		showWelcome();
 
-		
 		do
 		{
-
 			System.out.println("    [1] Generate Film name");
 			System.out.println("    [2] Stored generated films");
-			System.out.println("    [3] Maintain \n");
+			System.out.println("    [3] Edit content \n");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -48,7 +44,6 @@ public class Main {
 
 		}
 		while(!exitProgram);
-
 
 	}
 

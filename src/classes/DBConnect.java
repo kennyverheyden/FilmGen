@@ -20,22 +20,25 @@ public class DBConnect {
 
 	}
 
-	public static void openDB() {
 
-		{
+	// Only for connectivity testing	
+	//	public static void openDB() {
+	//
+	//		{
+	//			try {
+	//				Class.forName("org.sqlite.JDBC");
+	//				c = DriverManager.getConnection(AccDB);
+	//			} catch ( Exception e ) {
+	//				System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	//				System.exit(0);
+	//			}
+	//			System.out.println("Opened database successfully");
+	//
+	//		}
+	//	}
 
-			try {
-				Class.forName("org.sqlite.JDBC");
-				c = DriverManager.getConnection(AccDB);
-			} catch ( Exception e ) {
-				System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-				System.exit(0);
-			}
-			System.out.println("Opened database successfully");
 
-		}
-	}
-
+	// getters for DB
 	public ArrayList getCategorie()
 	{
 		ArrayList<String> films = new ArrayList<>();
