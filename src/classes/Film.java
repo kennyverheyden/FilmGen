@@ -1,5 +1,7 @@
 package classes;
 
+import java.util.ArrayList;
+
 public class Film {
 
 	private String hyperbolic;
@@ -10,8 +12,7 @@ public class Film {
 	private String verb;
 	private String location;
 	private String title;
-	
-	
+
 	public Film()
 	{
 		//Load testdata
@@ -23,13 +24,24 @@ public class Film {
 		verb="Sink";
 		location="The Canadian Rockies";
 	}
-	
+
+	// Make DB connection
+	DBConnect myDBConnection = new DBConnect();
+
+	// Tables of DB loaded separately in ArrayLists
+	ArrayList<String> categories = myDBConnection.getCategorie();
+	ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
+	ArrayList<String> languages = myDBConnection.getLanguages();
+	ArrayList<String> locations = myDBConnection.getLocations();
+	ArrayList<String> stories = myDBConnection.getStories();
+	ArrayList<String> subjects = myDBConnection.getSubjects();
+	ArrayList<String> verbs = myDBConnection.getVerbs();
+	ArrayList<String> words = myDBConnection.getVerbs();
+
 	public void buildTitle() 
 	{
-		//  “A (hyperbolic) (story) of a (subject) And a (subject) who must (verb) a (subject) in (location)” 
-		//   A . . of a . And a . who must . a . in .
-		
-		StringBuilder sb = new StringBuilder();
+		String title=  "A " +hyperbolic+ " " +story+ " of a "+subject1+" and a "+subject2+" who must "+verb+" a "+subject3+ " in "+location; 
+		System.out.println(title);
 	}
-	
+
 }

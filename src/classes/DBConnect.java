@@ -20,7 +20,6 @@ public class DBConnect {
 
 	}
 
-
 	public static void openDB() {
 
 		{
@@ -36,7 +35,6 @@ public class DBConnect {
 
 		}
 	}
-
 
 	public ArrayList getCategorie()
 	{

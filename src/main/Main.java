@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.Scanner;
 import classes.DBConnect;
+import classes.Film;
 
 public class Main {
 
@@ -11,32 +12,15 @@ public class Main {
 		// TODO Auto-generated method stub
 
 
-		// Make DB connection
-		DBConnect myDBConnection = new DBConnect();
-
-		// Tables of DB loaded separately in ArrayLists
-		ArrayList<String> categories = myDBConnection.getCategorie();
-		ArrayList<String> hyperbolic = myDBConnection.getHyperbolic();
-		ArrayList<String> languages = myDBConnection.getLanguages();
-		ArrayList<String> locations = myDBConnection.getLocations();
-		ArrayList<String> stories = myDBConnection.getStories();
-		ArrayList<String> subjects = myDBConnection.getSubjects();
-		ArrayList<String> verbs = myDBConnection.getVerbs();
-		ArrayList<String> words = myDBConnection.getVerbs();
-
-		// print loaded arrayList to test
-		//				for(String value: languages)
-		//				{
-		//					System.out.println(value);
-		//				}
-
 		Scanner userinput = new Scanner(System.in);
 		boolean exitProgram = false;
 		char userChose=' ';
+		Film film = new Film();
 
+		
 		showWelcome();
 
-
+		
 		do
 		{
 
@@ -52,7 +36,7 @@ public class Main {
 
 			switch(userChose) {
 			case '1':
-				System.out.println("....");
+				film.buildTitle();
 				break;
 			case '2':
 				System.out.println("....");
