@@ -37,7 +37,7 @@ public class DBConnect {
 		}
 	}
 
-	
+
 	public ArrayList getCategorie()
 	{
 		ArrayList<String> films = new ArrayList<>();
@@ -55,7 +55,7 @@ public class DBConnect {
 		}
 		return(films);
 	}
-	
+
 	public ArrayList getHyperbolic()
 	{
 		ArrayList<String> hyperbolic = new ArrayList<>();
@@ -73,7 +73,7 @@ public class DBConnect {
 		}
 		return(hyperbolic);
 	}
-	
+
 	public ArrayList getLanguages()
 	{
 		ArrayList<String> languages = new ArrayList<>();
@@ -84,15 +84,17 @@ public class DBConnect {
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				languages.add(resultSet.getString("language")); 
-				//languages.add(resultSet.getString("langCode"+" "+"language"));
+				//languages.add(resultSet.getString("language")); 
+				//languages.add(resultSet.getString("langCode"));
+				String language=resultSet.getString("langCode")+" "+resultSet.getString("language");
+				languages.add(language);
 			}
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(languages);
 	}
-	
+
 	public ArrayList getLocations()
 	{
 		ArrayList<String> locations = new ArrayList<>();
@@ -110,8 +112,8 @@ public class DBConnect {
 		}
 		return(locations);
 	}
-	
-		public ArrayList getStories()
+
+	public ArrayList getStories()
 	{
 		ArrayList<String> stories = new ArrayList<>();
 		sqlQuery="select stories from stories";
@@ -128,8 +130,8 @@ public class DBConnect {
 		}
 		return(stories);
 	}
-	
-			public ArrayList getSubjects()
+
+	public ArrayList getSubjects()
 	{
 		ArrayList<String> subjects = new ArrayList<>();
 		sqlQuery="select subjects from subjects";
@@ -146,8 +148,8 @@ public class DBConnect {
 		}
 		return(subjects);
 	}
-	
-				public ArrayList getVerbs()
+
+	public ArrayList getVerbs()
 	{
 		ArrayList<String> verbs = new ArrayList<>();
 		sqlQuery="select verbs from verbs";
@@ -164,8 +166,8 @@ public class DBConnect {
 		}
 		return(verbs);
 	}
-	
-					public ArrayList getWords()
+
+	public ArrayList getWords()
 	{
 		ArrayList<String> words = new ArrayList<>();
 		sqlQuery="select word from words";
@@ -182,5 +184,5 @@ public class DBConnect {
 		}
 		return(words);
 	}
-	
+
 }
