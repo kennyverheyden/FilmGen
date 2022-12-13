@@ -21,7 +21,6 @@ public class DBConnect {
 	}
 
 
-	// Database test
 	public static void openDB() {
 
 		{
@@ -38,9 +37,8 @@ public class DBConnect {
 		}
 	}
 
-
-	// Data ophalen en in ArrayList
-	public ArrayList getCategories()
+	
+	public ArrayList getCategorie()
 	{
 		ArrayList<String> films = new ArrayList<>();
 		sqlQuery="select category from categories";
@@ -57,4 +55,132 @@ public class DBConnect {
 		}
 		return(films);
 	}
+	
+	public ArrayList getHyperbolic()
+	{
+		ArrayList<String> hyperbolic = new ArrayList<>();
+		sqlQuery="select hyperbolic from hyperbolic";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				hyperbolic.add(resultSet.getString("hyperbolic")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(hyperbolic);
+	}
+	
+	public ArrayList getLanguages()
+	{
+		ArrayList<String> languages = new ArrayList<>();
+		sqlQuery="select langCode, language from languages";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				languages.add(resultSet.getString("language")); 
+				//languages.add(resultSet.getString("langCode"+" "+"language"));
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(languages);
+	}
+	
+	public ArrayList getLocations()
+	{
+		ArrayList<String> locations = new ArrayList<>();
+		sqlQuery="select locations from locations";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				locations.add(resultSet.getString("locations")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(locations);
+	}
+	
+		public ArrayList getStories()
+	{
+		ArrayList<String> stories = new ArrayList<>();
+		sqlQuery="select stories from stories";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				stories.add(resultSet.getString("stories")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(stories);
+	}
+	
+			public ArrayList getSubjects()
+	{
+		ArrayList<String> subjects = new ArrayList<>();
+		sqlQuery="select subjects from subjects";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				subjects.add(resultSet.getString("subjects")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(subjects);
+	}
+	
+				public ArrayList getVerbs()
+	{
+		ArrayList<String> verbs = new ArrayList<>();
+		sqlQuery="select verbs from verbs";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				verbs.add(resultSet.getString("verbs")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(verbs);
+	}
+	
+					public ArrayList getWords()
+	{
+		ArrayList<String> words = new ArrayList<>();
+		sqlQuery="select word from words";
+		try{
+			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				words.add(resultSet.getString("word")); 
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(words);
+	}
+	
 }
