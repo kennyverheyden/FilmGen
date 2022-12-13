@@ -40,8 +40,9 @@ public class Main {
 		do
 		{
 
-			System.out.println("    [1] Option 1\n");
-			System.out.println("    [2] Option 2 \n");
+			System.out.println("    [1] Generate Film name");
+			System.out.println("    [2] Stored generated films \n");
+			System.out.println("    [3] Maintain \n");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
