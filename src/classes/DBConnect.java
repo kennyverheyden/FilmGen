@@ -12,7 +12,7 @@ public class DBConnect {
 	static Connection c;
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
-	static String AccDB="jdbc:sqlite:src/resources/FilmGen.sqlite";
+	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite";
 	String sqlQuery;
 
 	public DBConnect()
@@ -27,7 +27,7 @@ public class DBConnect {
 	//		{
 	//			try {
 	//				Class.forName("org.sqlite.JDBC");
-	//				c = DriverManager.getConnection(AccDB);
+	//				c = DriverManager.getConnection(url);
 	//			} catch ( Exception e ) {
 	//				System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	//				System.exit(0);
@@ -37,14 +37,45 @@ public class DBConnect {
 	//		}
 	//	}
 
+	// Insert Film title, foreign ID, indexes
+	public void insertFilmIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubject2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
+	{
+		sqlQuery="INSERT INTO main.films (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, indexOfcategory);
+			preparedStatement.setInt(2, indexOfhyperbolic);
+			preparedStatement.setInt(3, indexOfStories);
+			preparedStatement.setInt(4, indexOfSubjects1);
+			preparedStatement.setInt(5, indexOfSubject2);
+			preparedStatement.setInt(6, indexOfVerbs);
+			preparedStatement.setInt(7, indexOfSubject3);
+			preparedStatement.setInt(8, indexOfLocation);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				System.out.println("Title saved\n");
+			}
+			else
+			{
+				System.out.println("Title not saved due problem with database\n");
+			}
 
-	// getters for DB
+		}catch(Exception e){
+			System.out.println(e);
+		}
+
+	}
+
+
+	// Getters for DB
 	public ArrayList getCategorie()
 	{
 		ArrayList<String> films = new ArrayList<>();
 		sqlQuery="select category from categories";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -62,7 +93,7 @@ public class DBConnect {
 		ArrayList<String> hyperbolic = new ArrayList<>();
 		sqlQuery="select hyperbolic from hyperbolic";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -80,7 +111,7 @@ public class DBConnect {
 		ArrayList<String> languages = new ArrayList<>();
 		sqlQuery="select langCode, language from languages";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -101,7 +132,7 @@ public class DBConnect {
 		ArrayList<String> locations = new ArrayList<>();
 		sqlQuery="select locations from locations";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -119,7 +150,7 @@ public class DBConnect {
 		ArrayList<String> stories = new ArrayList<>();
 		sqlQuery="select stories from stories";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -137,7 +168,7 @@ public class DBConnect {
 		ArrayList<String> subjects = new ArrayList<>();
 		sqlQuery="select subjects from subjects";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -155,7 +186,7 @@ public class DBConnect {
 		ArrayList<String> verbs = new ArrayList<>();
 		sqlQuery="select verbs from verbs";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
@@ -173,7 +204,7 @@ public class DBConnect {
 		ArrayList<String> words = new ArrayList<>();
 		sqlQuery="select word from words";
 		try{
-			c= DriverManager.getConnection(AccDB);//Establishing Connection
+			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();

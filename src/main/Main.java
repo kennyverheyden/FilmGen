@@ -22,7 +22,7 @@ public class Main {
 	{
 		Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
-		char userChose=' ';
+		char userChoice=' ';
 
 		do
 		{
@@ -33,9 +33,9 @@ public class Main {
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
 			System.out.print("  Choice: ");
-			userChose=userInput.next().toLowerCase().charAt(0);
+			userChoice=userInput.next().toLowerCase().charAt(0);
 
-			switch(userChose) {
+			switch(userChoice) {
 			case '1':
 				filmGenerateMenu();
 				break;
@@ -54,7 +54,7 @@ public class Main {
 	{
 		Scanner userInput = new Scanner(System.in);
 		Film film = new Film();
-		char userChose=' ';
+		char userChoice=' ';
 
 		System.out.println("\n    Select a genre\n");
 		System.out.println("    [1] Generate general film name");
@@ -65,17 +65,15 @@ public class Main {
 		System.out.println("");
 		System.out.print("  Choice: ");
 
-		userChose=userInput.next().toLowerCase().charAt(0);
-		switch(userChose) {
+		userChoice=userInput.next().toLowerCase().charAt(0);
+		switch(userChoice) {
 		case '1':
-			film.buildTitle();
-			pressKeyToContinue();
+			film.showFormattedTitle();
 			break;
 
 		case '2':
 			// submenu
 			System.out.print("Genre 1");
-			pressKeyToContinue();
 			break;
 			// end sub
 		case '3':
@@ -87,7 +85,7 @@ public class Main {
 	// Pause or stop the program till user input
 	private static void pressKeyToContinue() {
 		Scanner userInput = new Scanner(System.in);
-		System.out.println("Press enter to continue");
+		System.out.println("   Press enter to continue");
 		userInput.nextLine();
 	}
 
@@ -104,6 +102,6 @@ public class Main {
 
 	// Show message when the program closes
 	private static void showExitMessage() {
-		System.out.println("\nThank you for using this program");
+		System.out.println("\n   Thank you for using this program");
 	}
 }
