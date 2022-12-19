@@ -56,7 +56,7 @@ public class Main {
 		Film film = new Film();
 		char userChoice=' ';
 
-		System.out.println("\n    Select a genre\n");
+		System.out.println("\n    Select an option\n");
 		System.out.println("    [1] Generate common film name");
 		//		System.out.println("    [2] Genre 1");
 		//		System.out.println("    [3] Genre 2 \n");

@@ -82,10 +82,6 @@ public class Film {
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			for(int j=0;j<getCategories().size();j++)
-			{
-				System.out.println(getCategories().get(j));
-			}
 			String mergedTitle="   ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
@@ -167,6 +163,8 @@ public class Film {
 		System.out.println("   [1] Generate another title");
 		System.out.println("   [2] Save the generated title");
 		System.out.println("");
+		System.out.println("    Press [q] for back");
+		System.out.println("");
 		System.out.print("   Choice: ");
 		System.out.println("");
 
@@ -186,7 +184,7 @@ public class Film {
 		case '2':
 			this.storeGeneratedFilm();
 			break;
-		default:
+		case 'q':
 			break;
 		}
 	}
