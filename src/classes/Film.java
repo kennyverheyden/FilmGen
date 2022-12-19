@@ -1,23 +1,23 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Film {
 
 	// Make DB connection
-	DBConnect myDBConnection = new DBConnect();
+	static DBConnect myDBConnection = new DBConnect();
 
 	// Tables of DB loaded separately in ArrayLists
-	ArrayList<String> categories = myDBConnection.getCategorie();
-	ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
-	ArrayList<String> languages = myDBConnection.getLanguages();
-	ArrayList<String> locations = myDBConnection.getLocations();
-	ArrayList<String> stories = myDBConnection.getStories();
-	ArrayList<String> subjects = myDBConnection.getSubjects();
-	ArrayList<String> verbs = myDBConnection.getVerbs();
-	ArrayList<String> words = myDBConnection.getVerbs();
+	static ArrayList<String> categories = myDBConnection.getCategorie();
+	static ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
+	static ArrayList<String> locations = myDBConnection.getLocations();
+	static ArrayList<String> stories = myDBConnection.getStories();
+	static ArrayList<String> subjects = myDBConnection.getSubjects();
+	static ArrayList<String> verbs = myDBConnection.getVerbs();
+	static ArrayList<String> words = myDBConnection.getVerbs();
 
 	// Index of elements for DB operations
 	private int indexOfCategory;
@@ -66,9 +66,35 @@ public class Film {
 		indexOfLocation=locations.indexOf(location);
 
 		//  Build the string with the fields in the template string
-		generatedTitle=  "   A " +hyperbolic+ " " +story+ " of a "+subject1+" and a "+subject2+" who must "+verb+" a "+subject3+ " in "+location; 
+		generatedTitle=  "   A " +hyperbolic.toLowerCase()+ " " +story.toLowerCase()+ " of a "+subject1.toLowerCase()+" and a "+subject2.toLowerCase()+" who must "+verb.toLowerCase()+" a "+subject3.toLowerCase()+ " in "+location.toLowerCase(); 
 
 		return generatedTitle;
+	}
+
+	public static void readStoredTitles()
+	{
+		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains only foreign keys from database
+		ArrayList<String> titles = new ArrayList<>(); // Here we will store the merged titles
+		StringBuilder result = new StringBuilder(); // For merging the titles
+
+		// Merge the titles
+		for(int i=0;i<keys.size();i++)
+		{
+			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+			// Here we merge to one complete title in template
+			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
+			// The index number is the foreign key number stored in the parts array
+			String mergedTitle="   A " +getHyperbolics().get(Integer.parseInt((parts[1]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[3]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[6]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[7]))-1).toLowerCase(); 
+			titles.add(mergedTitle);
+		}
+
+		// Print the titles from the ArrayList
+		System.out.println("");
+		for(String title:titles)
+		{
+			System.out.println(title);
+		}
+		System.out.println("");
 	}
 
 	public void showFormattedTitle()
@@ -131,15 +157,49 @@ public class Film {
 			if(i==10) {System.out.print("\n   ");}; // add new line for readability
 		}
 		System.out.println("\n");
-		System.out.println("Assign genre number: ");
+		System.out.println("   Assign genre number: ");
 		// Ask user choice
 		Scanner userInput = new Scanner(System.in);
 		int userChoiceGenre=userInput.nextInt();
-		myDBConnection.insertFilmIndex(userChoiceGenre, indexOfhyperbolic, indexOfStories, indexOfSubject1, indexOfSubject2, indexOfVerbs, indexOfSubject3, indexOfLocation);
+
+		// Add +1 to index because array starts from 0; forein keys in DB starts from 1
+		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre+1, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
+		if(success)
+		{
+			System.out.println("   Title saved\n");
+		}
+		else
+		{
+			System.out.println("   Title not saved due problem with database\n");
+		}
 	}
 
-	public String getGeneratedTitle() {
-		return generatedTitle;
+	public static ArrayList<String> getCategories() {
+		return categories;
+	}
+
+	public static ArrayList<String> getHyperbolics() {
+		return hyperbolics;
+	}
+
+	public static ArrayList<String> getLocations() {
+		return locations;
+	}
+
+	public static ArrayList<String> getStories() {
+		return stories;
+	}
+
+	public static ArrayList<String> getSubjects() {
+		return subjects;
+	}
+
+	public static ArrayList<String> getVerbs() {
+		return verbs;
+	}
+
+	public static ArrayList<String> getWords() {
+		return words;
 	}
 
 }

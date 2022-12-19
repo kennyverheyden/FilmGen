@@ -9,9 +9,9 @@ public class Main {
 	public static void main(String[] args) {
 
 		showWelcome();
-		
+
 		runProgram(); // start content menu
-		
+
 		showExitMessage();
 
 	}
@@ -28,7 +28,7 @@ public class Main {
 		{
 			System.out.println("    [1] Generate film name");
 			System.out.println("    [2] Stored generated films");
-			System.out.println("    [3] Edit content \n");
+			//System.out.println("    [3] Edit content \n");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -40,7 +40,7 @@ public class Main {
 				filmGenerateMenu();
 				break;
 			case '2':
-				System.out.println("....");
+				Film.readStoredTitles();
 				break;
 			case 'q':
 				exitProgram = true;
@@ -57,11 +57,11 @@ public class Main {
 		char userChoice=' ';
 
 		System.out.println("\n    Select a genre\n");
-		System.out.println("    [1] Generate general film name");
-		System.out.println("    [2] Genre 1");
-		System.out.println("    [3] Genre 2 \n");
+		System.out.println("    [1] Generate common film name");
+		//		System.out.println("    [2] Genre 1");
+		//		System.out.println("    [3] Genre 2 \n");
 		System.out.println(" ");
-		System.out.println("    Press [q] to quit");
+		System.out.println("    Press [q] for back");
 		System.out.println("");
 		System.out.print("  Choice: ");
 
