@@ -75,7 +75,7 @@ public class Film {
 	{
 		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains only foreign keys from database
 		ArrayList<String> titles = new ArrayList<>(); // Here we will store the merged titles
-		StringBuilder result = new StringBuilder(); // For merging the titles
+		Scanner userInput = new Scanner(System.in);
 
 		// Merge the titles
 		for(int i=0;i<keys.size();i++)
@@ -84,7 +84,7 @@ public class Film {
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedTitle="   Gengre: "+ getCategories().get(Integer.parseInt((parts[0]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[1]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[3]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[6]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[7]))-1).toLowerCase(); 
+			String mergedTitle="   ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
 			printFormattingLine(mergedTitle.length());
 			titles.add(mergedTitle);
 		}
@@ -96,6 +96,9 @@ public class Film {
 			System.out.println(title);
 		}
 		System.out.println("");
+		System.out.println("Delete film: ");
+		int toDelete=userInput.nextInt();
+		//int databasePrimaryKey = 
 	}
 
 	public void showFormattedTitle()
