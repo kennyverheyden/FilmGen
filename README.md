@@ -13,3 +13,8 @@ A title is created by choosing random words from a database. That can be just a 
 The title consists of a template and the database chooses words from other tables.
 
 “A (hyperbolic) (story) of a (subject) fand a (subject) who must (verb) a (subject) in (location)” 
+
+<h3>Database</h3>
+
+All generated titles are stored in a relational database with foreign keys.
+The database is used in SQLite.
