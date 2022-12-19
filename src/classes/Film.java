@@ -73,10 +73,8 @@ public class Film {
 
 	public static void readStoredTitles()
 	{
-		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains only foreign keys from database
+		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> titles = new ArrayList<>(); // Here we will store the merged titles
-		Scanner userInput = new Scanner(System.in);
-
 		// Merge the titles
 		for(int i=0;i<keys.size();i++)
 		{
@@ -84,21 +82,62 @@ public class Film {
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
+			for(int j=0;j<getCategories().size();j++)
+			{
+				System.out.println(getCategories().get(j));
+			}
 			String mergedTitle="   ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
-			printFormattingLine(mergedTitle.length());
-			titles.add(mergedTitle);
+			titles.add(mergedTitle); // Add title to ArrayList
 		}
 
 		// Print the titles from the ArrayList
 		System.out.println("");
-		for(String title:titles)
+		for(int i=0;i<titles.size();i++)
 		{
-			System.out.println(title);
+			if(i==0)
+			{
+				printFormattingLine(titles.get(i).length()); // Add line to the screen
+			}
+			System.out.println(titles.get(i));
+			printFormattingLine(titles.get(i).length()); // Add line to the screen
+
 		}
 		System.out.println("");
-		System.out.println("Delete film: ");
-		int toDelete=userInput.nextInt();
-		//int databasePrimaryKey = 
+
+		// Show options to the user
+		Scanner userInput = new Scanner(System.in);
+		char userChoice=' ';
+		System.out.println("    [1] Delete a title");
+		System.out.println(" ");
+		System.out.println("    Press [q] for back");
+		System.out.println("");
+		System.out.print("  Choice: ");
+		userChoice=userInput.next().toLowerCase().charAt(0);
+		switch(userChoice) {
+		case '1':
+			deleteTitle(keys);
+			break;
+		case 'q':
+			break;
+		}
+	}
+
+	private static void deleteTitle(ArrayList<String> keys) {
+		Scanner userInput = new Scanner(System.in);
+		System.out.print("Delete film: ");
+		int toDelete=userInput.nextInt(); // Get userChose number
+		String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
+		int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
+		boolean success=myDBConnection.deleteTitle(databasePrimaryKey);
+		if(success)
+		{
+			System.out.println("   \nTitle deleted");
+		}
+		else
+		{
+			System.out.println("   \nTitle not deleted due database error");
+		}
+		System.out.println("");
 	}
 
 	public void showFormattedTitle()
@@ -127,7 +166,8 @@ public class Film {
 		System.out.println("");
 		System.out.println("   [1] Generate another title");
 		System.out.println("   [2] Save the generated title");
-		System.out.println("   \nPress enter to continue");
+		System.out.println("");
+		System.out.print("   Choice: ");
 		System.out.println("");
 
 		Scanner userInput = new Scanner(System.in);
@@ -161,13 +201,13 @@ public class Film {
 			if(i==10) {System.out.print("\n   ");}; // add new line for readability
 		}
 		System.out.println("\n");
-		System.out.println("   Assign genre number: ");
+		System.out.print("   Assign genre number: ");
 		// Ask user choice
 		Scanner userInput = new Scanner(System.in);
 		int userChoiceGenre=userInput.nextInt();
 
 		// Add +1 to index because array starts from 0; forein keys in DB starts from 1
-		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre+1, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
+		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
 		if(success)
 		{
 			System.out.println("   Title saved\n");

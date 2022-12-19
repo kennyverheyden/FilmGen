@@ -57,6 +57,30 @@ public class DBConnect {
 		return(TitleForeignKeys);
 	}
 
+	// Delete a generated film title
+	public boolean deleteTitle(int PK)
+	{
+		sqlQuery="DELETE FROM main.films WHERE film_id = ?";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, PK);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
+
 	// Insert Film title, foreign ID, indexes
 	public boolean insertFilmIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubject2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
 	{
@@ -92,7 +116,7 @@ public class DBConnect {
 	// Getters for DB
 	public ArrayList getCategorie()
 	{
-		ArrayList<String> films = new ArrayList<>();
+		ArrayList<String> categories = new ArrayList<>();
 		sqlQuery="select category from categories";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
@@ -100,12 +124,12 @@ public class DBConnect {
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				films.add(resultSet.getString("category")); 
+				categories.add(resultSet.getString("category")); 
 			}
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
-		return(films);
+		return(categories);
 	}
 
 	public ArrayList getHyperbolic()
