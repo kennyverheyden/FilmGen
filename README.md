@@ -16,5 +16,5 @@ The title consists of a template and the database chooses words from other table
 
 <h3>Database</h3>
 
-All generated titles are stored in a relational database with foreign keys.
+All generated titles & descriptions are stored in a relational database with foreign keys.
 The database is used in SQLite.
