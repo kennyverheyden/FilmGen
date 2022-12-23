@@ -29,11 +29,11 @@ public class Film {
 	private int indexOfVerbs;
 	private int indexOfLocation;
 
-	private String generatedTitle;
+	private String generatedDescription;
 
 	public Film()
 	{
-		generatedTitle=this.generateTitle();
+		generatedDescription=this.generateDescription();
 	}
 
 	// random picker in the ArrayList
@@ -44,10 +44,10 @@ public class Film {
 		return randomNum;
 	}
 
-	private String generateTitle() 
+	private String generateDescription() 
 	{
 
-		String generatedTitle; // Generated title
+		String generatedDescription; // Generated description
 
 		// Assign random content to fields
 		String hyperbolic=hyperbolics.get(randomPicker(hyperbolics));
@@ -66,36 +66,36 @@ public class Film {
 		indexOfLocation=locations.indexOf(location);
 
 		//  Build the string with the fields in the template string
-		generatedTitle=  "   A " +hyperbolic.toLowerCase()+ " " +story.toLowerCase()+ " of a "+subject1.toLowerCase()+" and a "+subject2.toLowerCase()+" who must "+verb.toLowerCase()+" a "+subject3.toLowerCase()+ " in "+location.toLowerCase(); 
+		generatedDescription=  "   A " +hyperbolic.toLowerCase()+ " " +story.toLowerCase()+ " of a "+subject1.toLowerCase()+" and a "+subject2.toLowerCase()+" who must "+verb.toLowerCase()+" a "+subject3.toLowerCase()+ " in "+location.toLowerCase(); 
 
-		return generatedTitle;
+		return generatedDescription;
 	}
 
-	public static void readStoredTitles()
+	public static void readStoredDescription()
 	{
-		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains Primary Key and foreign keys from database
-		ArrayList<String> titles = new ArrayList<>(); // Here we will store the merged titles
-		// Merge the titles
+		ArrayList<String> keys = myDBConnection.getDescriptionForeignKeys(); // Contains Primary Key and foreign keys from database
+		ArrayList<String> descriptions = new ArrayList<>(); // Here we will store the merged descriptions
+		// Merge the descriptions
 		for(int i=0;i<keys.size();i++)
 		{
 			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
-			// Here we merge to one complete title in template
+			// Here we merge to one complete description in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedTitle="   ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
-			titles.add(mergedTitle); // Add title to ArrayList
+			String mergedDescription="   ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
+			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
-		// Print the titles from the ArrayList
+		// Print the descriptions from the ArrayList
 		System.out.println("");
-		for(int i=0;i<titles.size();i++)
+		for(int i=0;i<descriptions.size();i++)
 		{
 			if(i==0)
 			{
-				printFormattingLine(titles.get(i).length()); // Add line to the screen
+				printFormattingLine(descriptions.get(i).length()); // Add line to the screen
 			}
-			System.out.println(titles.get(i));
-			printFormattingLine(titles.get(i).length()); // Add line to the screen
+			System.out.println(descriptions.get(i));
+			printFormattingLine(descriptions.get(i).length()); // Add line to the screen
 
 		}
 		System.out.println("");
@@ -103,7 +103,7 @@ public class Film {
 		// Show options to the user
 		Scanner userInput = new Scanner(System.in);
 		char userChoice=' ';
-		System.out.println("    [1] Delete a title");
+		System.out.println("    [1] Delete a description");
 		System.out.println(" ");
 		System.out.println("    Press [q] for back");
 		System.out.println("");
@@ -111,57 +111,57 @@ public class Film {
 		userChoice=userInput.next().toLowerCase().charAt(0);
 		switch(userChoice) {
 		case '1':
-			deleteTitle(keys);
+			deleteDescription(keys);
 			break;
 		case 'q':
 			break;
 		}
 	}
 
-	private static void deleteTitle(ArrayList<String> keys) {
+	private static void deleteDescription(ArrayList<String> keys) {
 		Scanner userInput = new Scanner(System.in);
-		System.out.print("Delete film: ");
+		System.out.print("Delete description: ");
 		int toDelete=userInput.nextInt(); // Get userChose number
 		String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
 		int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
-		boolean success=myDBConnection.deleteTitle(databasePrimaryKey);
+		boolean success=myDBConnection.deleteDescription(databasePrimaryKey);
 		if(success)
 		{
-			System.out.println("   \nTitle deleted");
+			System.out.println("   \nDescription deleted");
 		}
 		else
 		{
-			System.out.println("   \nTitle not deleted due database error");
+			System.out.println("   \nDescription not deleted due database error");
 		}
 		System.out.println("");
 	}
 
-	public void showFormattedTitle()
+	public void showFormattedDescription()
 	{
-		System.out.println("\n   Generated film title:");
-		printFormattingLine(generatedTitle.length());  // Extend dynamic the line as long as the title
-		System.out.println(generatedTitle); // Print the title
-		printFormattingLine(generatedTitle.length());
-		titleOptions(); // What can the user do with the title
+		System.out.println("\n   Generated film description:");
+		printFormattingLine(generatedDescription.length());  // Extend dynamic the line as long as the description
+		System.out.println(generatedDescription); // Print the description
+		printFormattingLine(generatedDescription.length());
+		descriptionOptions(); // What can the user do with the description
 	}
 
 	// Dynamic line
 	public static void printFormattingLine(int length) // take e.g string.length() 
 	{
 		System.out.print("  "); // formatting: add extra space before line
-		for(int i=0;i<length-1;i++)  // extend dynamic the line as long as the title
+		for(int i=0;i<length-1;i++)  // extend dynamic the line as long as the string
 		{
 			System.out.print("-");	
 		}
 		System.out.println(); // new line
 	}
 
-	// Generated title options, regenerate and store in DB
-	private void titleOptions()
+	// Generated description options, regenerate and store in DB
+	private void descriptionOptions()
 	{
 		System.out.println("");
-		System.out.println("   [1] Generate another title");
-		System.out.println("   [2] Save the generated title");
+		System.out.println("   [1] Generate another description");
+		System.out.println("   [2] Save the generated description");
 		System.out.println("");
 		System.out.println("    Press [q] for back");
 		System.out.println("");
@@ -178,18 +178,18 @@ public class Film {
 		switch(userChoice) {
 		case '1':
 
-			this.generatedTitle=this.generateTitle();
-			this.showFormattedTitle();
+			this.generatedDescription=this.generateDescription();
+			this.showFormattedDescription();
 			break;
 		case '2':
-			this.storeGeneratedFilm();
+			this.storeGeneratedDescription();
 			break;
 		case 'q':
 			break;
 		}
 	}
 
-	private void storeGeneratedFilm() {
+	private void storeGeneratedDescription() {
 		System.out.println("   Assign one of the following genres.");
 		System.out.println("");  // new line
 		System.out.print("   "); // add some spaces before line
@@ -205,14 +205,14 @@ public class Film {
 		int userChoiceGenre=userInput.nextInt();
 
 		// Add +1 to index because array starts from 0; forein keys in DB starts from 1
-		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
+		boolean success=myDBConnection.insertDescriptionIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
 		if(success)
 		{
-			System.out.println("   Title saved\n");
+			System.out.println("   Description saved\n");
 		}
 		else
 		{
-			System.out.println("   Title not saved due problem with database\n");
+			System.out.println("   Description not saved due problem with database\n");
 		}
 	}
 

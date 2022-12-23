@@ -26,8 +26,8 @@ public class Main {
 
 		do
 		{
-			System.out.println("    [1] Generate film name");
-			System.out.println("    [2] Stored generated films");
+			System.out.println("    [1] Generate description");
+			System.out.println("    [2] Stored generated descriptions");
 			//System.out.println("    [3] Edit content \n");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
@@ -40,7 +40,7 @@ public class Main {
 				filmGenerateMenu();
 				break;
 			case '2':
-				Film.readStoredTitles();
+				Film.readStoredDescription();
 				break;
 			case 'q':
 				exitProgram = true;
@@ -57,7 +57,7 @@ public class Main {
 		char userChoice=' ';
 
 		System.out.println("\n    Select an option\n");
-		System.out.println("    [1] Generate common film name");
+		System.out.println("    [1] Generate a description");
 		//		System.out.println("    [2] Genre 1");
 		//		System.out.println("    [3] Genre 2 \n");
 		System.out.println(" ");
@@ -68,7 +68,7 @@ public class Main {
 		userChoice=userInput.next().toLowerCase().charAt(0);
 		switch(userChoice) {
 		case '1':
-			film.showFormattedTitle();
+			film.showFormattedDescription();
 			break;
 
 		case '2':

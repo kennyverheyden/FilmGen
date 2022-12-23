@@ -39,10 +39,10 @@ public class DBConnect {
 
 
 	// Get Film title, foreign ID, index
-	public ArrayList getTitleForeignKeys()
+	public ArrayList getDescriptionForeignKeys()
 	{
 		ArrayList<String> TitleForeignKeys = new ArrayList<>();
-		sqlQuery="select film_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id from main.films";
+		sqlQuery="select film_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id from main.descriptions";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
@@ -58,9 +58,9 @@ public class DBConnect {
 	}
 
 	// Delete a generated film title
-	public boolean deleteTitle(int PK)
+	public boolean deleteDescription(int PK)
 	{
-		sqlQuery="DELETE FROM main.films WHERE film_id = ?";
+		sqlQuery="DELETE FROM main.descriptions WHERE film_id = ?";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
@@ -82,9 +82,9 @@ public class DBConnect {
 	}
 
 	// Insert Film title, foreign ID, indexes
-	public boolean insertFilmIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubject2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
+	public boolean insertDescriptionIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubject2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
 	{
-		sqlQuery="INSERT INTO main.films (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		sqlQuery="INSERT INTO main.descriptions (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
