@@ -2,6 +2,7 @@ package main;
 
 import java.util.Scanner;
 import classes.Film;
+import classes.FilmDescription;
 
 public class Main {
 
@@ -16,13 +17,13 @@ public class Main {
 
 	}
 
-
 	// Start content menu
 	private static void runProgram()
 	{
 		Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
 		char userChoice=' ';
+		FilmDescription filmDescrib = new FilmDescription();
 
 		do
 		{
@@ -37,10 +38,10 @@ public class Main {
 
 			switch(userChoice) {
 			case '1':
-				filmGenerateMenu();
+				filmDescrib.descriptionGenerateMenu();
 				break;
 			case '2':
-				Film.readStoredDescription();
+				filmDescrib.readStoredDescription();
 				break;
 			case 'q':
 				exitProgram = true;
@@ -48,38 +49,6 @@ public class Main {
 			}
 		}
 		while(!exitProgram);
-	}
-
-	private static void filmGenerateMenu()
-	{
-		Scanner userInput = new Scanner(System.in);
-		Film film = new Film();
-		char userChoice=' ';
-
-		System.out.println("\n    Select an option\n");
-		System.out.println("    [1] Generate a description");
-		//		System.out.println("    [2] Genre 1");
-		//		System.out.println("    [3] Genre 2 \n");
-		System.out.println(" ");
-		System.out.println("    Press [q] for back");
-		System.out.println("");
-		System.out.print("  Choice: ");
-
-		userChoice=userInput.next().toLowerCase().charAt(0);
-		switch(userChoice) {
-		case '1':
-			film.showFormattedDescription();
-			break;
-
-		case '2':
-			// submenu
-			System.out.print("Genre 1");
-			break;
-			// end sub
-		case '3':
-			System.out.println("Genre 2");
-			break;
-		}
 	}
 
 	// Pause or stop the program till user input
