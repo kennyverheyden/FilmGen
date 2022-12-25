@@ -48,7 +48,7 @@ public class FilmTitle extends Film{
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedTitle="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+getSubjects().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getVerbs().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getWords().get(Integer.parseInt((parts[4]))-1).toLowerCase()+""; 
+			String mergedTitle="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getSubjects().get(Integer.parseInt((parts[2]))-1))+ " " +getVerbs().get(Integer.parseInt((parts[3]))-1)+ " "+getWords().get(Integer.parseInt((parts[4]))-1)+""; 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
 

@@ -61,7 +61,7 @@ public class FilmDescription extends Film{
 			// Here we merge to one complete description in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedDescription="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - " +"A "+getHyperbolics().get(Integer.parseInt((parts[2]))-1).toLowerCase()+ " " +getStories().get(Integer.parseInt((parts[3]))-1).toLowerCase()+ " of a "+getSubjects().get(Integer.parseInt((parts[4]))-1).toLowerCase()+" and a "+getSubjects().get(Integer.parseInt((parts[5]))-1).toLowerCase()+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1).toLowerCase()+" a "+getSubjects().get(Integer.parseInt((parts[7]))-1).toLowerCase()+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1).toLowerCase(); 
+			String mergedDescription="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getHyperbolics().get(Integer.parseInt((parts[2]))-1))+ " " +getStories().get(Integer.parseInt((parts[3]))-1)+ " of "+getSubjects().get(Integer.parseInt((parts[4]))-1)+" and "+getSubjects().get(Integer.parseInt((parts[5]))-1)+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1)+" "+getSubjects().get(Integer.parseInt((parts[7]))-1)+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1); 
 			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
