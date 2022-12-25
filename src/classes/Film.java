@@ -50,7 +50,7 @@ public abstract class Film {
 		System.out.print("   "); // add some spaces before line
 		for(int i=0;i<categories.size();i++)
 		{
-			System.out.print(" "+(i+1)+"="+categories.get(i)+" ");
+			System.out.print(" "+(i+1)+ "="+capitalize(categories.get(i))+" ");
 			if(i>3 && i%5==0) {System.out.print("\n   ");}; // add new line for readability
 		}
 		System.out.print("\n    Assign genre number: ");
