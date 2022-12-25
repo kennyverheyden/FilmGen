@@ -44,7 +44,7 @@ public class FilmDescription extends Film{
 		indexOfLocation=locations.indexOf(location);
 
 		//  Build the string with the fields in the template string
-		generatedDescription=  "A " +hyperbolic.toLowerCase()+ " " +story.toLowerCase()+ " of a "+subject1.toLowerCase()+" and a "+subject2.toLowerCase()+" who must "+verb.toLowerCase()+" a "+subject3.toLowerCase()+ " in "+location.toLowerCase(); 
+		generatedDescription=  "" +capitalize(hyperbolic)+ " " +story+ " of "+subject1+" and "+subject2+" "+verb+" "+subject3+ " in "+location; 
 
 		return generatedDescription;
 	}

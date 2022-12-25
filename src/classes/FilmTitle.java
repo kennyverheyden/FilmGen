@@ -31,7 +31,7 @@ public class FilmTitle extends Film{
 		indexOfWord=words.indexOf(word);
 
 		//  Build the string with the fields in the template string
-		generatedTitle=  "" +subject.toLowerCase()+ " " +verb.toLowerCase()+ " of a "+word.toLowerCase()+""; 
+		generatedTitle=  "" +capitalize(subject)+ " " +verb+" "+word+""; 
 
 		return generatedTitle;
 	}
