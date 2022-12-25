@@ -38,29 +38,10 @@ public class DBConnect {
 	//	}
 
 
-	// Get Film title, foreign ID, index
-	public ArrayList getDescriptionForeignKeys()
-	{
-		ArrayList<String> TitleForeignKeys = new ArrayList<>();
-		sqlQuery="select film_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id from main.descriptions";
-		try{
-			c= DriverManager.getConnection(url);//Establishing Connection
-			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
-			ResultSet resultSet=preparedStatement.executeQuery();
-			while(resultSet.next()){
-				TitleForeignKeys.add(resultSet.getInt("film_id")+" "+resultSet.getInt("fk_category_id") +" "+ resultSet.getInt("fk_hyperbolic_id") +" "+ resultSet.getInt("fk_story_id") +" "+ resultSet.getInt("fk_subjects_id") +" "+ resultSet.getInt("fk_subjects_id_2") +" "+ resultSet.getInt("fk_verb_id")
-				+" "+ resultSet.getInt("fk_subjects_id_3") +" "+ resultSet.getInt("fk_location_id"));
-			}
-		}catch(Exception e){
-			System.out.println("Error in connection");
-		}
-		return(TitleForeignKeys);
-	}
-
 	// Delete a generated film title
-	public boolean deleteDescription(int PK)
+	public boolean deleteTitle(int PK)
 	{
-		sqlQuery="DELETE FROM main.descriptions WHERE film_id = ?";
+		sqlQuery="DELETE FROM main.titles WHERE title_id = ?";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
@@ -82,6 +63,94 @@ public class DBConnect {
 	}
 
 	// Insert Film title, foreign ID, indexes
+	public boolean insertTitleIndex(int indexOfCategory, int indexOfSubject, int indexOfVerb, int indexOfWord)
+	{
+		sqlQuery="INSERT INTO main.titles (fk_category_id, fk_subjects_id, fk_verb_id, fk_word_id) VALUES (?, ?, ?, ?)";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, indexOfCategory);
+			preparedStatement.setInt(2, indexOfSubject);
+			preparedStatement.setInt(3, indexOfVerb);
+			preparedStatement.setInt(4, indexOfWord);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	// Get Titles FK, foreign ID, index
+	public ArrayList getTitleForeignKeys()
+	{
+		ArrayList<String> TitleForeignKeys = new ArrayList<>();
+		sqlQuery="select title_id, fk_category_id, fk_subjects_id, fk_verb_id, fk_word_id from main.titles";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				TitleForeignKeys.add(resultSet.getInt("title_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_subjects_id") +" "+ resultSet.getInt("fk_verb_id") +" "+ resultSet.getInt("fk_word_id") +" "+ resultSet.getInt("fk_subjects_id"));
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(TitleForeignKeys);
+	}
+
+	// Get Descriptions FK, foreign ID, index
+	public ArrayList getDescriptionForeignKeys()
+	{
+		ArrayList<String> DescriptionForeignKeys = new ArrayList<>();
+		sqlQuery="select description_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id from main.descriptions";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				DescriptionForeignKeys.add(resultSet.getInt("description_id")+" "+resultSet.getInt("fk_category_id") +" "+ resultSet.getInt("fk_hyperbolic_id") +" "+ resultSet.getInt("fk_story_id") +" "+ resultSet.getInt("fk_subjects_id") +" "+ resultSet.getInt("fk_subjects_id_2") +" "+ resultSet.getInt("fk_verb_id")
+				+" "+ resultSet.getInt("fk_subjects_id_3") +" "+ resultSet.getInt("fk_location_id"));
+			}
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(DescriptionForeignKeys);
+	}
+
+	// Delete a generated film description
+	public boolean deleteDescription(int PK)
+	{
+		sqlQuery="DELETE FROM main.descriptions WHERE description_id = ?";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, PK);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	// Insert Film description, foreign ID, indexes
 	public boolean insertDescriptionIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubject2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
 	{
 		sqlQuery="INSERT INTO main.descriptions (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
