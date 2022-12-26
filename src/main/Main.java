@@ -7,7 +7,7 @@ import classes.FilmTitle;
 
 public class Main {
 
-
+	// Main
 	public static void main(String[] args) {
 
 		showWelcome();
@@ -59,13 +59,6 @@ public class Main {
 			}
 		}
 		while(!exitProgram);
-	}
-
-	// Pause or stop the program till user input
-	private static void pressKeyToContinue() {
-		Scanner userInput = new Scanner(System.in);
-		System.out.println("    Press enter to continue");
-		userInput.nextLine();
 	}
 
 	// Show welcome message 
