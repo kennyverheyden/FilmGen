@@ -131,17 +131,17 @@ public abstract class Film {
 		}
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
-	
+
 	// A or An (returns a word with "a" or "an" depending on the word)
 	public static String aOrAn(String str) {
 		char initialChar = str.charAt(0);
-		
+
 		if (initialChar == 'a' || initialChar == 'e' || initialChar == 'i' || initialChar == 'o' || initialChar == 'u') {
 			return "an " + str;
 		} else {
 			return "a " + str;
 		}
-		
+
 	}
 
 	public static ArrayList<String> getCategories() {
