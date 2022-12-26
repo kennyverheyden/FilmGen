@@ -12,8 +12,9 @@ public class Main {
 
 		showWelcome();
 
-		runProgram(); // start content menu
-
+		// start content menu
+		runProgram(); 
+		
 		showExitMessage();
 
 	}
@@ -73,6 +74,6 @@ public class Main {
 
 	// Show message when the program closes
 	private static void showExitMessage() {
-		System.out.println("\n    Thank you for using this program");
+		System.out.println("\n    Thank you  using this program!");
 	}
 }
