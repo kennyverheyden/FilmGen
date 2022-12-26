@@ -24,7 +24,7 @@ public abstract class Film {
 	public Film(){	
 	}
 
-	// Random picker in the ArrayList
+	// random picker in the ArrayList
 	public int randomPicker(ArrayList obj)
 	{
 		Random rn = new Random();
@@ -43,7 +43,6 @@ public abstract class Film {
 		System.out.println(); // new line
 	}
 
-	// Ask genre (category)
 	public int askGengre()
 	{
 		System.out.println("\n    Assign one of the following genres.");
@@ -73,7 +72,6 @@ public abstract class Film {
 		return userChoiceGenre;
 	}
 
-	// Check if a number is an Integer
 	public static boolean isInteger(String s) {
 		try { 
 			Integer.parseInt(s); 
@@ -84,11 +82,8 @@ public abstract class Film {
 		return true;
 	}
 
-	// Override method to use unique query for DB
-	// Called from method deleteItem()
 	public abstract boolean executeDelete(int databasePrimaryKey);
 
-	// Delete item from Title or Description Dable
 	public void deleteItem(ArrayList<String> keys) {
 		Scanner userInput = new Scanner(System.in);
 		System.out.print("\n    Delete item: ");
@@ -124,24 +119,11 @@ public abstract class Film {
 		}
 	}
 
-	// Capitalize the first letter of a String
 	public static String capitalize(String str) {
 		if(str == null || str.isEmpty()) {
 			return str;
 		}
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
-
-	// A or An (returns a word with "a" or "an" depending on the word)
-	public static String aOrAn(String str) {
-		char initialChar = str.charAt(0);
-
-		if (initialChar == 'a' || initialChar == 'e' || initialChar == 'i' || initialChar == 'o' || initialChar == 'u') {
-			return "an " + str;
-		} else {
-			return "a " + str;
-		}
-
 	}
 
 	public static ArrayList<String> getCategories() {

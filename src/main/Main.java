@@ -7,13 +7,12 @@ import classes.FilmTitle;
 
 public class Main {
 
-	// Main
+
 	public static void main(String[] args) {
 
 		showWelcome();
 
-		// start content menu
-		runProgram(); 
+		runProgram(); // start content menu
 
 		showExitMessage();
 
@@ -62,6 +61,13 @@ public class Main {
 		while(!exitProgram);
 	}
 
+	// Pause or stop the program till user input
+	private static void pressKeyToContinue() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("    Press enter to continue");
+		userInput.nextLine();
+	}
+
 	// Show welcome message 
 	private static void showWelcome()
 	{
@@ -74,6 +80,6 @@ public class Main {
 
 	// Show message when the program closes
 	private static void showExitMessage() {
-		System.out.println("\n    Thank you  using this program!");
+		System.out.println("\n    Thank you for using this program");
 	}
 }

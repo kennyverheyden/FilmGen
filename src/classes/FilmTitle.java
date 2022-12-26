@@ -25,18 +25,13 @@ public class FilmTitle extends Film{
 		// Assign random content to fields
 		String subject=subjects.get(randomPicker(subjects));
 		indexOfSubject=subjects.indexOf(subject);
-
 		String verb=verbs.get(randomPicker(verbs));
 		indexOfVerbs=verbs.indexOf(verb);
-
 		String word=words.get(randomPicker(words));
 		indexOfWord=words.indexOf(word);
 
-		String word2=words.get(randomPicker(words));
-		indexOfWord=words.indexOf(word2);
-
 		//  Build the string with the fields in the template string
-		generatedTitle= capitalize(word)+ " " + capitalize(word2); 
+		generatedTitle=  "" +capitalize(subject)+ " " +verb+" "+word+""; 
 
 		return generatedTitle;
 	}
@@ -50,7 +45,6 @@ public class FilmTitle extends Film{
 		for(int i=0;i<keys.size();i++)
 		{
 			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
-
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
@@ -117,7 +111,7 @@ public class FilmTitle extends Film{
 
 		Scanner userInput = new Scanner(System.in);
 		String userChoice = userInput.nextLine().toLowerCase();
-
+	
 		switch(userChoice) {
 		case "1":
 			this.generatedTitle=this.generateTitle();
