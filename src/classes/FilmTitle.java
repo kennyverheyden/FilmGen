@@ -25,13 +25,18 @@ public class FilmTitle extends Film{
 		// Assign random content to fields
 		String subject=subjects.get(randomPicker(subjects));
 		indexOfSubject=subjects.indexOf(subject);
+		
 		String verb=verbs.get(randomPicker(verbs));
 		indexOfVerbs=verbs.indexOf(verb);
+		
 		String word=words.get(randomPicker(words));
 		indexOfWord=words.indexOf(word);
+		
+		String word2=words.get(randomPicker(words));
+		indexOfWord=words.indexOf(word2);
 
 		//  Build the string with the fields in the template string
-		generatedTitle=  "" +capitalize(subject)+ " " +verb+" "+word+""; 
+		generatedTitle= capitalize(word)+ " " + capitalize(word2); 
 
 		return generatedTitle;
 	}
@@ -44,10 +49,12 @@ public class FilmTitle extends Film{
 		// Merge the titles
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+			String[] parts = keys.get(i).split(" ");
+			// Retrieve a record and split to array by space
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
+			
 			String mergedTitle="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getSubjects().get(Integer.parseInt((parts[2]))-1))+ " " +getVerbs().get(Integer.parseInt((parts[3]))-1)+ " "+getWords().get(Integer.parseInt((parts[4]))-1)+""; 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
