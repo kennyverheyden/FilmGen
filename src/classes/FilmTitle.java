@@ -8,9 +8,9 @@ public class FilmTitle extends Film{
 	private String generatedTitle;
 
 	// Index of elements for DB operations
-	private int indexOfSubject;
-	private int indexOfVerbs;
+
 	private int indexOfWord;
+	private int indexOfWord_2;
 
 	public FilmTitle()
 	{
@@ -19,19 +19,18 @@ public class FilmTitle extends Film{
 
 	private String generateTitle()
 	{
-
 		String generatedTitle; // Generated title
 
 		// Assign random content to fields
-		String subject=subjects.get(randomPicker(subjects));
-		indexOfSubject=subjects.indexOf(subject);
-		String verb=verbs.get(randomPicker(verbs));
-		indexOfVerbs=verbs.indexOf(verb);
+
 		String word=words.get(randomPicker(words));
 		indexOfWord=words.indexOf(word);
 
+		String word2=words.get(randomPicker(words));
+		indexOfWord_2=words.indexOf(word2);
+
 		//  Build the string with the fields in the template string
-		generatedTitle=  "" +capitalize(subject)+ " " +verb+" "+word+""; 
+		generatedTitle= capitalize(word)+ " " + capitalize(word2); 
 
 		return generatedTitle;
 	}
@@ -44,11 +43,13 @@ public class FilmTitle extends Film{
 		// Merge the titles
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+			String[] parts = keys.get(i).split(" ");
+			// Retrieve a record and split to array by space
 			// Here we merge to one complete title in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedTitle="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getSubjects().get(Integer.parseInt((parts[2]))-1))+ " " +getVerbs().get(Integer.parseInt((parts[3]))-1)+ " "+getWords().get(Integer.parseInt((parts[4]))-1)+""; 
+
+			String mergedTitle="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getWords().get(Integer.parseInt((parts[2]))-1))+ " " +getWords().get(Integer.parseInt((parts[3]))-1)+""; 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
 
@@ -111,7 +112,7 @@ public class FilmTitle extends Film{
 
 		Scanner userInput = new Scanner(System.in);
 		String userChoice = userInput.nextLine().toLowerCase();
-	
+
 		switch(userChoice) {
 		case "1":
 			this.generatedTitle=this.generateTitle();
@@ -126,9 +127,9 @@ public class FilmTitle extends Film{
 	}
 
 	private void storeGeneratedTitle() {
-		int userChoiceGenre=askGengre(); // Ask genre to assign
+		int userChoiceGenre=assignGenre(); // Ask genre to assign
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
-		boolean success=myDBConnection.insertTitleIndex(userChoiceGenre, indexOfSubject+1, indexOfVerbs+1, indexOfWord+1);
+		boolean success=myDBConnection.insertTitleIndex(userChoiceGenre, indexOfWord+1, indexOfWord_2+1);
 		if(success)
 		{
 			System.out.println("\n    Title saved");
@@ -137,5 +138,6 @@ public class FilmTitle extends Film{
 		{
 			System.out.println("\n    Title not saved due problem with database");
 		}
+		pressKeyToContinue();
 	}
 }

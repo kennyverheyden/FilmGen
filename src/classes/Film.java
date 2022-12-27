@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -24,7 +23,7 @@ public abstract class Film {
 	public Film(){	
 	}
 
-	// random picker in the ArrayList
+	// Random picker in the ArrayList
 	public int randomPicker(ArrayList obj)
 	{
 		Random rn = new Random();
@@ -33,16 +32,50 @@ public abstract class Film {
 	}
 
 	// Dynamic line
-	public static void printFormattingLine(int length) // take e.g string.length() 
+	public static void printFormattingLine(int length) // Take e.g string.length() 
 	{
-		System.out.print("    "); // formatting: add extra space before line
-		for(int i=0;i<length-1;i++)  // extend dynamic the line as long as the string
+		System.out.print("    "); // Formatting: add extra space before line
+		for(int i=0;i<length-1;i++)  // Extend dynamic the line as long as the string
 		{
 			System.out.print("-");	
 		}
-		System.out.println(); // new line
+		System.out.println(); // New line
 	}
 
+	// Ask random genre (category) or choose a genre
+	public int assignGenre()
+	{
+		Scanner userInput = new Scanner(System.in);
+		int genre;
+		System.out.println("\n    Assign genre:");
+		System.out.println("");
+		System.out.println("    [1] Let the computer pick a random genre");
+		System.out.println("    [2] Choose a genre");
+		System.out.println("");
+		System.out.print("    Choice: ");
+
+		String input=userInput.nextLine(); // Get userChoice number
+
+		// Avoid error when user type not a valid number
+		while (!input.equals("1") && !input.equals("2"))
+		{
+			System.out.print("\n    Enter a valid number: ");
+			input=userInput.nextLine();
+		}
+		switch(input) {
+		case "1":
+			genre=this.randomGenre();
+			return genre;
+		case "2":
+			genre=this.askGengre();
+			return genre;
+		default :
+			genre=this.randomGenre();
+			return genre;
+		}
+	}
+
+	// Ask genre (category)
 	public int askGengre()
 	{
 		System.out.println("\n    Assign one of the following genres.");
@@ -68,10 +101,36 @@ public abstract class Film {
 			input = userInput.nextLine();
 			userChoiceGenre=Integer.parseInt(input);
 		}
-
 		return userChoiceGenre;
 	}
 
+	// Random genre (category)
+	public int randomGenre()
+	{
+		boolean confirmed = false; // check user confirmation
+		int randomGenre = randomPicker(this.getCategories()); // Call method randomPicker for random int
+		Scanner userInput = new Scanner(System.in);
+		String input;
+		while(!confirmed) // As long as the user not confirmed his choose
+		{
+			randomGenre = randomPicker(this.getCategories());
+			System.out.println("\n    Random genre: "+this.getCategories().get(randomGenre)); // Show random genre
+			System.out.print("    Would you like to confirm? [y/n]: "); // Ask for confirmation
+			input = userInput.nextLine().toLowerCase();
+			while(!input.equals("y") && !input.equals("n")) // Input validation
+			{
+				System.out.print("    Invalid input. Enter y or n: ");
+				input = userInput.nextLine();
+			}
+			if(input.equals("y"))
+			{
+				confirmed=true;
+			}
+		}
+		return randomGenre+1; // +1 because array-size starts from 0 and Database starts from 1
+	}
+
+	// Check if a number is an Integer
 	public static boolean isInteger(String s) {
 		try { 
 			Integer.parseInt(s); 
@@ -82,8 +141,11 @@ public abstract class Film {
 		return true;
 	}
 
+	// Override method to use unique query for DB
+	// Called from method deleteItem()
 	public abstract boolean executeDelete(int databasePrimaryKey);
 
+	// Delete item from Title or Description table
 	public void deleteItem(ArrayList<String> keys) {
 		Scanner userInput = new Scanner(System.in);
 		System.out.print("\n    Delete item: ");
@@ -106,19 +168,47 @@ public abstract class Film {
 			if(executeDelete(databasePrimaryKey))
 			{
 				System.out.println("\n    Chosen item deleted");
+				pressKeyToContinue();
 			}
 			else
 			{
 				System.out.println("    Item not deleted due database error");
+				pressKeyToContinue();
 			}
 			System.out.println("");
 		}
 		else
 		{
-			System.out.println("\n    No stored items in database\n");
+			System.out.println("\n    No stored items in database");
+			pressKeyToContinue();
 		}
 	}
 
+	// Define "an" article for a word with start with a vowel. Example: an average
+	public static String articleWord(String word)
+	{
+		String article = null;
+		char first = word.charAt(0);
+
+		if(first=='a' || first=='e' || first=='i' || first=='o' || first=='u' || first=='y')
+		{
+			article="an";
+		}
+		else
+		{
+			article="a";
+		}
+		return article;
+	}
+
+	// Pause or stop the program till user input
+	public static void pressKeyToContinue() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("    Press enter to continue");
+		userInput.nextLine();
+	}
+
+	// Capitalize the first letter of a String
 	public static String capitalize(String str) {
 		if(str == null || str.isEmpty()) {
 			return str;

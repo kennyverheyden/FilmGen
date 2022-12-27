@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 public class DBConnect {
 
 	static Connection c;
@@ -19,7 +18,6 @@ public class DBConnect {
 	{
 
 	}
-
 
 	// Only for connectivity testing	
 	//	public static void openDB() {
@@ -36,7 +34,6 @@ public class DBConnect {
 	//
 	//		}
 	//	}
-
 
 	// Delete a generated film title
 	public boolean deleteTitle(int PK)
@@ -63,16 +60,15 @@ public class DBConnect {
 	}
 
 	// Insert Film title, foreign ID, indexes
-	public boolean insertTitleIndex(int indexOfCategory, int indexOfSubject, int indexOfVerb, int indexOfWord)
+	public boolean insertTitleIndex(int indexOfCategory, int indexOfWord1, int indexOfWord2)
 	{
-		sqlQuery="INSERT INTO main.titles (fk_category_id, fk_subjects_id, fk_verb_id, fk_word_id) VALUES (?, ?, ?, ?)";
+		sqlQuery="INSERT INTO main.titles (fk_category_id, fk_word_id, fk_word_id_2) VALUES (?, ?, ?)";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, indexOfCategory);
-			preparedStatement.setInt(2, indexOfSubject);
-			preparedStatement.setInt(3, indexOfVerb);
-			preparedStatement.setInt(4, indexOfWord);
+			preparedStatement.setInt(2, indexOfWord1);
+			preparedStatement.setInt(3, indexOfWord2);
 			int row=preparedStatement.executeUpdate();
 			if(row==1)
 			{
@@ -93,13 +89,13 @@ public class DBConnect {
 	public ArrayList getTitleForeignKeys()
 	{
 		ArrayList<String> TitleForeignKeys = new ArrayList<>();
-		sqlQuery="select title_id, fk_category_id, fk_subjects_id, fk_verb_id, fk_word_id from main.titles";
+		sqlQuery="select title_id, fk_category_id, fk_word_id, fk_word_id_2 from main.titles";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				TitleForeignKeys.add(resultSet.getInt("title_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_subjects_id") +" "+ resultSet.getInt("fk_verb_id") +" "+ resultSet.getInt("fk_word_id") +" "+ resultSet.getInt("fk_subjects_id"));
+				TitleForeignKeys.add(resultSet.getInt("title_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_word_id") +" "+ resultSet.getInt("fk_word_id_2") +"");
 			}
 		}catch(Exception e){
 			System.out.println("Error in connection");
@@ -180,7 +176,6 @@ public class DBConnect {
 		}
 		return false;
 	}
-
 
 	// Getters for DB
 	public ArrayList getCategorie()

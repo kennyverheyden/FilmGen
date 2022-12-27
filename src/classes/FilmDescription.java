@@ -8,7 +8,6 @@ public class FilmDescription extends Film{
 	private String generatedDescription;
 
 	// Index of elements for DB operations
-	private int indexOfCategory;
 	private int indexOfhyperbolic;
 	private int indexOfStories;
 	private int indexOfSubject1;
@@ -43,8 +42,8 @@ public class FilmDescription extends Film{
 		String location=locations.get(randomPicker(locations));
 		indexOfLocation=locations.indexOf(location);
 
-		//  Build the string with the fields in the template string
-		generatedDescription=  "" +capitalize(hyperbolic)+ " " +story+ " of "+subject1+" and "+subject2+" "+verb+" "+subject3+ " in "+location; 
+		//  Build the String with the fields in the template String
+		generatedDescription=  capitalize(articleWord(hyperbolic)) +" "+ hyperbolic + " " +story+ " of "+ subject1 + " and " + subject2 + " who must " + verb + " " + subject3 + " in "+ location; 
 
 		return generatedDescription;
 	}
@@ -58,10 +57,20 @@ public class FilmDescription extends Film{
 		for(int i=0;i<keys.size();i++)
 		{
 			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+
 			// Here we merge to one complete description in template
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
-			String mergedDescription="    ["+(i+1)+"] Gengre: "+ getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase()+" - "+capitalize(getHyperbolics().get(Integer.parseInt((parts[2]))-1))+ " " +getStories().get(Integer.parseInt((parts[3]))-1)+ " of "+getSubjects().get(Integer.parseInt((parts[4]))-1)+" and "+getSubjects().get(Integer.parseInt((parts[5]))-1)+" who must "+getVerbs().get(Integer.parseInt((parts[6]))-1)+" "+getSubjects().get(Integer.parseInt((parts[7]))-1)+ " in "+getLocations().get(Integer.parseInt((parts[8]))-1); 
+			String genre= getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase();
+			String hyperbolic=getHyperbolics().get(Integer.parseInt((parts[2]))-1);
+			String story=getStories().get(Integer.parseInt((parts[3]))-1);
+			String subject1=getSubjects().get(Integer.parseInt((parts[4]))-1);
+			String subject2=getSubjects().get(Integer.parseInt((parts[5]))-1);
+			String verb=getVerbs().get(Integer.parseInt((parts[6]))-1);
+			String subject3=getSubjects().get(Integer.parseInt((parts[7]))-1);
+			String location=getLocations().get(Integer.parseInt((parts[8]))-1);
+			// Merge
+			String mergedDescription="    ["+(i+1)+"] Gengre: "+ genre + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location; 
 			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
@@ -138,7 +147,7 @@ public class FilmDescription extends Film{
 	}
 
 	private void storeGeneratedDescription() {
-		int userChoiceGenre=askGengre(); // Ask genre to assign
+		int userChoiceGenre=assignGenre(); // Ask genre to assign
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
 		boolean success=myDBConnection.insertDescriptionIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
 		if(success)
@@ -149,5 +158,6 @@ public class FilmDescription extends Film{
 		{
 			System.out.println("\n    Description not saved due problem with database");
 		}
+		pressKeyToContinue();
 	}
 }
