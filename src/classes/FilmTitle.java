@@ -31,7 +31,7 @@ public class FilmTitle extends Film{
 
 		//  Build the string with the fields in the template string
 		generatedTitle= capitalize(word)+ " " + capitalize(word2); 
-
+		
 		return generatedTitle;
 	}
 
@@ -97,11 +97,11 @@ public class FilmTitle extends Film{
 		printFormattingLine(generatedTitle.length());  // Extend dynamic the line as long as the title
 		System.out.println("    "+generatedTitle); // Print the title
 		printFormattingLine(generatedTitle.length());
-		descriptionOptions(); // What can the user do with the title
+		titleOptions(); // What can the user do with the title
 	}
 
 	// Generated title options, regenerate and store in DB
-	private void descriptionOptions()
+	private void titleOptions()
 	{
 		System.out.println("");
 		System.out.println("    [1] Generate another title");
