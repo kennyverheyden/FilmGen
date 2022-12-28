@@ -29,10 +29,11 @@ public class Main {
 		do
 		{
 			System.out.println("");
-			System.out.println("    [1] Generate film title");
-			System.out.println("    [2] Generate description");
-			System.out.println("    [3] Stored generated titles ");
-			System.out.println("    [4] Stored generated descriptions");
+			System.out.println("    [1] Generate film (title + description)");
+			System.out.println("    [2] Generate title");
+			System.out.println("    [3] Generate description");
+			System.out.println("    [4] Stored generated titles ");
+			System.out.println("    [5] Stored generated descriptions");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -41,15 +42,19 @@ public class Main {
 
 			switch(userChoice) {
 			case "1":
-				filmTit.showFormattedTitle();
+				// PLACEHOLDER
+				System.out.println("test");
 				break;
 			case "2":
-				filmDescrib.showFormattedDescription();
+				filmTit.showFormattedTitle();
 				break;
 			case "3":
-				filmTit.readStoredTitle();
+				filmDescrib.showFormattedDescription();
 				break;
 			case "4":
+				filmTit.readStoredTitle();
+				break;
+			case "5":
 				filmDescrib.readStoredDescription();
 				break;
 			case "q":

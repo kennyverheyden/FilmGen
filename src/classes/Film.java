@@ -67,7 +67,7 @@ public abstract class Film {
 			genre=this.randomGenre();
 			return genre;
 		case "2":
-			genre=this.askGengre();
+			genre=this.askGenre();
 			return genre;
 		default :
 			genre=this.randomGenre();
@@ -76,7 +76,7 @@ public abstract class Film {
 	}
 
 	// Ask genre (category)
-	public int askGengre()
+	public int askGenre()
 	{
 		System.out.println("\n    Assign one of the following genres.");
 		System.out.println("");  // new line

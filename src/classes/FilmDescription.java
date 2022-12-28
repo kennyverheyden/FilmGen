@@ -70,7 +70,7 @@ public class FilmDescription extends Film{
 			String subject3=getSubjects().get(Integer.parseInt((parts[7]))-1);
 			String location=getLocations().get(Integer.parseInt((parts[8]))-1);
 			// Merge
-			String mergedDescription="    ["+(i+1)+"] Gengre: "+ genre + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location; 
+			String mergedDescription="    ["+(i+1)+"] Genre: "+ genre + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location; 
 			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
