@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public abstract class Film {
 
+	// PARENT CLASS
+
 	// Make DB connection
 	static DBConnect myDBConnection = new DBConnect();
 
@@ -18,9 +20,47 @@ public abstract class Film {
 	static ArrayList<String> verbs = myDBConnection.getVerbs();
 	static ArrayList<String> words = myDBConnection.getWords();
 
-	//PARENT CLASS
-
+	// Constructor
 	public Film(){	
+	}
+
+	// Delete item from Title or Description table
+	public void deleteItem(ArrayList<String> keys) {
+		Scanner userInput = new Scanner(System.in);
+		System.out.print("\n    Delete item: ");
+		String input=userInput.nextLine(); // Get userChose number
+		int toDelete = Integer.parseInt(input);
+		if(!keys.isEmpty())
+		{
+			// As long as input is integer
+			// Input choice is not 0, because PK in DB starts from 1
+			// Input choice not bigger than highest PK in DB (Size arrayList)
+			while (!isInteger(input) || toDelete==0 || toDelete>keys.size()) 
+			{
+				System.out.print("\n    Enter a valid number: ");
+				input=userInput.nextLine();
+				toDelete = Integer.parseInt(input);
+			}
+
+			String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
+			int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
+			if(executeDelete(databasePrimaryKey))
+			{
+				System.out.println("\n    Chosen item deleted");
+				pressKeyToContinue();
+			}
+			else
+			{
+				System.out.println("    Item not deleted due database error");
+				pressKeyToContinue();
+			}
+			System.out.println("");
+		}
+		else
+		{
+			System.out.println("\n    No stored items in database");
+			pressKeyToContinue();
+		}
 	}
 
 	// Random picker in the ArrayList
@@ -145,45 +185,6 @@ public abstract class Film {
 	// Called from method deleteItem()
 	public abstract boolean executeDelete(int databasePrimaryKey);
 
-	// Delete item from Title or Description table
-	public void deleteItem(ArrayList<String> keys) {
-		Scanner userInput = new Scanner(System.in);
-		System.out.print("\n    Delete item: ");
-		String input=userInput.nextLine(); // Get userChose number
-		int toDelete = Integer.parseInt(input);
-		if(!keys.isEmpty())
-		{
-			// As long as input is integer
-			// Input choice is not 0, because PK in DB starts from 1
-			// Input choice not bigger than highest PK in DB (Size arrayList)
-			while (!isInteger(input) || toDelete==0 || toDelete>keys.size()) 
-			{
-				System.out.print("\n    Enter a valid number: ");
-				input=userInput.nextLine();
-				toDelete = Integer.parseInt(input);
-			}
-
-			String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
-			int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
-			if(executeDelete(databasePrimaryKey))
-			{
-				System.out.println("\n    Chosen item deleted");
-				pressKeyToContinue();
-			}
-			else
-			{
-				System.out.println("    Item not deleted due database error");
-				pressKeyToContinue();
-			}
-			System.out.println("");
-		}
-		else
-		{
-			System.out.println("\n    No stored items in database");
-			pressKeyToContinue();
-		}
-	}
-
 	// Define "an" article for a word with start with a vowel. Example: an average
 	public static String articleWord(String word)
 	{
@@ -216,6 +217,7 @@ public abstract class Film {
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 
+	// Getters
 	public static ArrayList<String> getCategories() {
 		return categories;
 	}

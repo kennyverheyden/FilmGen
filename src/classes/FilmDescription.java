@@ -6,8 +6,7 @@ import java.util.Scanner;
 public class FilmDescription extends Film{
 
 	private String generatedDescription;
-
-	// Index of elements for DB operations
+	// Fields: Index of elements for DB operations
 	private int indexOfhyperbolic;
 	private int indexOfStories;
 	private int indexOfSubject1;
@@ -16,12 +15,22 @@ public class FilmDescription extends Film{
 	private int indexOfVerbs;
 	private int indexOfLocation;
 
+	// Constructor
 	public FilmDescription()
 	{
 		generatedDescription=this.generateDescription();
 	}
 
-	private String generateDescription() 
+	// Delete a record in the database
+	@Override
+	public boolean executeDelete(int databasePrimaryKey)
+	{
+		boolean success=myDBConnection.deleteDescription(databasePrimaryKey);
+		return success;
+	}
+
+	// Generate description
+	public String generateDescription() 
 	{
 
 		String generatedDescription; // Generated description
@@ -48,6 +57,7 @@ public class FilmDescription extends Film{
 		return generatedDescription;
 	}
 
+	// Print a list of the stored descriptions to the user
 	public static void readStoredDescription()
 	{
 		ArrayList<String> keys = myDBConnection.getDescriptionForeignKeys(); // Contains Primary Key and foreign keys from database
@@ -75,6 +85,15 @@ public class FilmDescription extends Film{
 		}
 
 		// Print the descriptions from the ArrayList
+		System.out.println("");
+		if(!keys.isEmpty())
+		{
+			System.out.println("    Stored separately generated descriptions:");
+		}
+		else
+		{
+			System.out.println("    Nothing saved");
+		}
 		System.out.println("");
 		for(int i=0;i<descriptions.size();i++)
 		{
@@ -105,13 +124,7 @@ public class FilmDescription extends Film{
 		}
 	}
 
-	@Override
-	public boolean executeDelete(int databasePrimaryKey)
-	{
-		boolean success=myDBConnection.deleteDescription(databasePrimaryKey);
-		return success;
-	}
-
+	// Print generated description to the user
 	public void showFormattedDescription()
 	{
 		System.out.println("\n    Generated film description:");
@@ -146,6 +159,7 @@ public class FilmDescription extends Film{
 		}
 	}
 
+	// Save generated description to the database
 	private void storeGeneratedDescription() {
 		int userChoiceGenre=assignGenre(); // Ask genre to assign
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
@@ -160,4 +174,42 @@ public class FilmDescription extends Film{
 		}
 		pressKeyToContinue();
 	}
+
+	// Needed for FilmTitleDescription class
+	public String getGeneratedDescription() {
+		return generatedDescription;
+	}
+
+	public int getIndexOfSubject3() {
+		return indexOfSubject3;
+	}
+
+	public void setIndexOfSubject3(int indexOfSubject3) {
+		this.indexOfSubject3 = indexOfSubject3;
+	}
+
+	public int getIndexOfhyperbolic() {
+		return indexOfhyperbolic;
+	}
+
+	public int getIndexOfStories() {
+		return indexOfStories;
+	}
+
+	public int getIndexOfSubject1() {
+		return indexOfSubject1;
+	}
+
+	public int getIndexOfSubject2() {
+		return indexOfSubject2;
+	}
+
+	public int getIndexOfVerbs() {
+		return indexOfVerbs;
+	}
+
+	public int getIndexOfLocation() {
+		return indexOfLocation;
+	}
+
 }

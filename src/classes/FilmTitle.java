@@ -8,16 +8,25 @@ public class FilmTitle extends Film{
 	private String generatedTitle;
 
 	// Index of elements for DB operations
-
 	private int indexOfWord;
 	private int indexOfWord_2;
 
+	// Constructor
 	public FilmTitle()
 	{
 		generatedTitle=this.generateTitle();
 	}
 
-	private String generateTitle()
+	// Delete a record in the database
+	@Override
+	public boolean executeDelete(int databasePrimaryKey)
+	{
+		boolean success=myDBConnection.deleteTitle(databasePrimaryKey);
+		return success;
+	}
+
+	// Generate title
+	public String generateTitle()
 	{
 		String generatedTitle; // Generated title
 
@@ -31,10 +40,11 @@ public class FilmTitle extends Film{
 
 		//  Build the string with the fields in the template string
 		generatedTitle= capitalize(word)+ " " + capitalize(word2); 
-		
+
 		return generatedTitle;
 	}
 
+	// Print a list of the stored titles to the user
 	public static void readStoredTitle()
 	{
 		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains Primary Key and foreign keys from database
@@ -54,6 +64,15 @@ public class FilmTitle extends Film{
 		}
 
 		// Print the titles from the ArrayList
+		System.out.println("");
+		if(!keys.isEmpty())
+		{
+			System.out.println("    Stored separately generated titles:");
+		}
+		else
+		{
+			System.out.println("    Nothing saved");
+		}
 		System.out.println("");
 		for(int i=0;i<titles.size();i++)
 		{
@@ -84,13 +103,7 @@ public class FilmTitle extends Film{
 		}
 	}
 
-	@Override
-	public boolean executeDelete(int databasePrimaryKey)
-	{
-		boolean success=myDBConnection.deleteTitle(databasePrimaryKey);
-		return success;
-	}
-
+	// Print generated title to the user
 	public void showFormattedTitle()
 	{
 		System.out.println("\n    Generated film title:");
@@ -126,6 +139,7 @@ public class FilmTitle extends Film{
 		}
 	}
 
+	// Save generated title to the database
 	private void storeGeneratedTitle() {
 		int userChoiceGenre=assignGenre(); // Ask genre to assign
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
@@ -140,4 +154,18 @@ public class FilmTitle extends Film{
 		}
 		pressKeyToContinue();
 	}
+
+	// Needed for FilmTitleDescription class
+	public String getGeneratedTitle() {
+		return generatedTitle;
+	}
+
+	public int getIndexOfWord() {
+		return indexOfWord;
+	}
+
+	public int getIndexOfWord_2() {
+		return indexOfWord_2;
+	}
+
 }

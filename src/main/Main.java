@@ -3,6 +3,7 @@ package main;
 import java.util.Scanner;
 import classes.FilmDescription;
 import classes.FilmTitle;
+import classes.FilmTitleDescription;
 
 public class Main {
 
@@ -23,6 +24,7 @@ public class Main {
 		Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
 		String userChoice;
+		FilmTitleDescription film = new FilmTitleDescription();
 		FilmTitle filmTit = new FilmTitle();
 		FilmDescription filmDescrib = new FilmDescription();
 
@@ -32,8 +34,9 @@ public class Main {
 			System.out.println("    [1] Generate film (title + description)");
 			System.out.println("    [2] Generate title");
 			System.out.println("    [3] Generate description");
-			System.out.println("    [4] Stored generated titles ");
-			System.out.println("    [5] Stored generated descriptions");
+			System.out.println("    [4] Stored generated films");
+			System.out.println("    [5] Stored separately generated titles");
+			System.out.println("    [6] Stored separately generated descriptions");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -43,7 +46,7 @@ public class Main {
 			switch(userChoice) {
 			case "1":
 				// PLACEHOLDER
-				System.out.println("test");
+				film.showFormattedTitleDescription();
 				break;
 			case "2":
 				filmTit.showFormattedTitle();
@@ -52,9 +55,12 @@ public class Main {
 				filmDescrib.showFormattedDescription();
 				break;
 			case "4":
-				filmTit.readStoredTitle();
+				film.readStoredTitleDescription();
 				break;
 			case "5":
+				filmTit.readStoredTitle();
+				break;
+			case "6":
 				filmDescrib.readStoredDescription();
 				break;
 			case "q":
