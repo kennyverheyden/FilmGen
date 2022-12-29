@@ -1,4 +1,4 @@
- <h1>Film gen</h1>
+ <h1>FilmGen</h1>
 
 <h3>The idea</h3>
 
