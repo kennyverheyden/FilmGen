@@ -36,7 +36,20 @@ public class FilmTitle extends Film{
 		indexOfWord=words.indexOf(word);
 
 		String word2=words.get(randomPicker(words));
-		indexOfWord_2=words.indexOf(word2);
+		// Check if word2 and word are duplicates
+		boolean notDuplicate=false;
+		while(!notDuplicate) {
+			if(!word.equals(word2))
+			{
+				indexOfWord_2=words.indexOf(word2);
+				notDuplicate=true;
+			}
+			else
+			{
+				notDuplicate=false;
+				word2=words.get(randomPicker(words));
+			}
+		}
 
 		//  Build the string with the fields in the template string
 		generatedTitle= capitalize(word)+ " " + capitalize(word2); 

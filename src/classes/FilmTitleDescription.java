@@ -29,10 +29,11 @@ public class FilmTitleDescription extends Film{
 	public void showFormattedTitleDescription()
 	{
 		System.out.println("\n    Generated film:");
-		printFormattingLine(generatedTitle.length());  // Extend dynamic the line as long as the title
-		System.out.println("    "+generatedTitle); // Print the title
-		System.out.println("    "+generatedDescription);
+		printFormattingLine(generatedDescription.length());  // Extend dynamic the line as long as the title
+		System.out.println("    Title:\n    "+generatedTitle); // Print the title
 		printFormattingLine(generatedTitle.length());
+		System.out.println("    Description:\n    "+generatedDescription);
+		printFormattingLine(generatedDescription.length());
 		titleDescriptionOptions(); // What can the user do with the title
 	}
 
