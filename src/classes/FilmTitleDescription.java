@@ -88,6 +88,7 @@ public class FilmTitleDescription extends Film{
 		default:
 			break;
 		}
+		
 	}
 
 	// Save generated film to the database
@@ -120,7 +121,7 @@ public class FilmTitleDescription extends Film{
 	}
 
 	// Print a list of the stored films to the user
-	public static void readStoredTitleDescription()
+	public void readStoredTitleDescription()
 	{
 		ArrayList<String> keys = myDBConnection.getFilmForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> films = new ArrayList<>(); // Here we will store the merged film titles and descriptions
@@ -145,7 +146,7 @@ public class FilmTitleDescription extends Film{
 			String subject3=getSubjects().get(Integer.parseInt((parts[9]))-1);
 			String location=getLocations().get(Integer.parseInt((parts[10]))-1);
 			// Merge
-			String mergedFilm="    ["+(i+1)+"] Genre: "+ genre + " - Film: "+ capitalize(articleWord(word1)) + " "+ capitalize(word1) + " " + capitalize(word2) + "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + capitalize(hyperbolic) +" "+ stories +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location; 
+			String mergedFilm="    ["+(i+1)+"] Genre: "+ genre + " - Film: "+ capitalize(word1) + " " + capitalize(word2) + "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ stories +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location; 
 			films.add(mergedFilm); // Add film to ArrayList
 		}
 

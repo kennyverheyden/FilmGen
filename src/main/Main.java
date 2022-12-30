@@ -45,7 +45,6 @@ public class Main {
 
 			switch(userChoice) {
 			case "1":
-				// PLACEHOLDER
 				film.showFormattedTitleDescription();
 				break;
 			case "2":
@@ -64,6 +63,7 @@ public class Main {
 				filmDescrib.readStoredDescription();
 				break;
 			case "q":
+				userInput.close(); // Prevents a resource leak warning
 				exitProgram = true;
 				break;
 			}

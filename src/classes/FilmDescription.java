@@ -58,7 +58,7 @@ public class FilmDescription extends Film{
 	}
 
 	// Print a list of the stored descriptions to the user
-	public static void readStoredDescription()
+	public void readStoredDescription()
 	{
 		ArrayList<String> keys = myDBConnection.getDescriptionForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> descriptions = new ArrayList<>(); // Here we will store the merged descriptions
