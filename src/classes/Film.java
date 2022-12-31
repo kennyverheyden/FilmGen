@@ -131,7 +131,11 @@ public abstract class Film {
 		Scanner userInput = new Scanner(System.in);
 
 		String input = userInput.nextLine();
-		int userChoiceGenre=Integer.parseInt(input);
+		int userChoiceGenre=0;
+		if(isInteger(input)) // Avoid error when user only press enter
+		{
+			userChoiceGenre=Integer.parseInt(input);
+		}
 
 		// As long as input is integer
 		// Input choice is not 0, because PK in DB starts from 1
@@ -139,7 +143,10 @@ public abstract class Film {
 		while (!isInteger(input) || userChoiceGenre==0 || userChoiceGenre>categories.size()) {
 			System.out.print("\n    Enter a valid number: ");
 			input = userInput.nextLine();
-			userChoiceGenre=Integer.parseInt(input);
+			if(isInteger(input)) // Avoid error when user only press enter
+			{
+				userChoiceGenre=Integer.parseInt(input);
+			}
 		}
 		return userChoiceGenre;
 	}
