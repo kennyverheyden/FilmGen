@@ -38,8 +38,9 @@ public abstract class Film {
 			while (!isInteger(input) || toDelete==0 || toDelete>keys.size()) 
 			{
 				System.out.print("\n    Enter a valid number: ");
-				input=userInput.nextLine();
+				input=userInput.nextLine();		
 				toDelete = Integer.parseInt(input);
+				
 			}
 
 			String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
