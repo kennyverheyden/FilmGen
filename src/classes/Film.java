@@ -1,5 +1,8 @@
 package classes;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -40,7 +43,7 @@ public abstract class Film {
 				System.out.print("\n    Enter a valid number: ");
 				input=userInput.nextLine();		
 				toDelete = Integer.parseInt(input);
-				
+
 			}
 
 			String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
@@ -223,6 +226,24 @@ public abstract class Film {
 			return str;
 		}
 		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
+
+	// Save to file
+	public void writeToFile(ArrayList<String> list)
+	{
+		try {
+			FileWriter writer = new FileWriter("FilmGen.txt");
+			for(int i=0;i<list.size();i++)
+			{
+				writer.write(list.get(i));
+				writer.write(System.lineSeparator());
+			}
+			writer.close();
+			System.out.println("    Successfully wrote to the file.");
+		} catch (IOException e) {
+			System.out.println("    An error occurred.");
+			e.printStackTrace();
+		}
 	}
 
 	// Getters

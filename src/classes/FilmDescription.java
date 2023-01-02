@@ -111,6 +111,7 @@ public class FilmDescription extends Film{
 		Scanner userInput = new Scanner(System.in);
 		String userChoice;
 		System.out.println("    [1] Delete a description");
+		System.out.println("    [2] Save to file");
 		System.out.println("\n    Press just enter for main menu");
 		System.out.println("");
 		System.out.print("    Choice: ");
@@ -118,6 +119,9 @@ public class FilmDescription extends Film{
 		switch(userChoice) {
 		case "1":
 			filmDes.deleteItem(keys);
+			break;
+		case "2":
+			writeToFile(descriptions);
 			break;
 		default:
 			break;
