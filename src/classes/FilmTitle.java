@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class FilmTitle extends Film{
 
-	private String generatedTitle;
+	private String generatedTitle; // Store generated title
+	private String objName; // Used for file name, ..
 
 	// Index of elements for DB operations
 	private int indexOfWord;
@@ -15,6 +16,7 @@ public class FilmTitle extends Film{
 	public FilmTitle()
 	{
 		generatedTitle=this.generateTitle();
+		objName="Title";
 	}
 
 	// Delete a record in the database
@@ -113,7 +115,7 @@ public class FilmTitle extends Film{
 			filmTit.deleteItem(keys);
 			break;
 		case "2":
-			writeToFile(titles);
+			writeToFile(objName,titles);
 			break;
 		default:
 			break;

@@ -229,20 +229,22 @@ public abstract class Film {
 	}
 
 	// Save to file
-	public void writeToFile(ArrayList<String> list)
+	public void writeToFile(String name, ArrayList<String> list)
 	{
 		try {
-			FileWriter writer = new FileWriter("FilmGen.txt");
+			FileWriter writer = new FileWriter("FilmGen - "+name+".txt");
 			for(int i=0;i<list.size();i++)
 			{
 				writer.write(list.get(i));
 				writer.write(System.lineSeparator());
 			}
 			writer.close();
-			System.out.println("    Successfully wrote to the file.");
+			System.out.println("\n    Successfully wrote to the file: FilmGen-"+name+".txt");
+			pressKeyToContinue();
 		} catch (IOException e) {
-			System.out.println("    An error occurred.");
+			System.out.println("\n    An error occurred.");
 			e.printStackTrace();
+			pressKeyToContinue();
 		}
 	}
 

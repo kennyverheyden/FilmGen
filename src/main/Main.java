@@ -12,7 +12,7 @@ public class Main {
 
 		showWelcome();
 
-		runProgram(); // start content menu
+		runProgram(); // Start content menu
 
 		showExitMessage();
 
@@ -85,4 +85,5 @@ public class Main {
 	private static void showExitMessage() {
 		System.out.println("\n    Thank you for using this program");
 	}
+	
 }

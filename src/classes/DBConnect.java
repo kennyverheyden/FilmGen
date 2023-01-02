@@ -11,12 +11,13 @@ public class DBConnect {
 	static Connection c;
 	PreparedStatement preparedStatement;
 	ResultSet resultSet;
-	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite";
 	String sqlQuery;
 
-	public DBConnect()
-	{
+	// Relative path to database file
+	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite";
 
+	// Constructor
+	public DBConnect(){
 	}
 
 	// Only for connectivity testing	

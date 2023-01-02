@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 public class FilmDescription extends Film{
 
-	private String generatedDescription;
+	private String generatedDescription; // Store generated description
+	private String objName; // Used for file name, ..
+
 	// Fields: Index of elements for DB operations
 	private int indexOfhyperbolic;
 	private int indexOfStories;
@@ -19,6 +21,7 @@ public class FilmDescription extends Film{
 	public FilmDescription()
 	{
 		generatedDescription=this.generateDescription();
+		objName="Description";
 	}
 
 	// Delete a record in the database
@@ -121,7 +124,7 @@ public class FilmDescription extends Film{
 			filmDes.deleteItem(keys);
 			break;
 		case "2":
-			writeToFile(descriptions);
+			writeToFile(objName,descriptions);
 			break;
 		default:
 			break;
