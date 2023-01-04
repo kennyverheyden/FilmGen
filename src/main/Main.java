@@ -10,18 +10,22 @@ public class Main {
 	// Main
 	public static void main(String[] args) {
 
+		// Initialize main scanner
+		Scanner mainScanner = new Scanner(System.in);
+		
 		showWelcome();
-
-		runProgram(); // Start content menu
-
+	    runProgram(mainScanner); // Start content menu
 		showExitMessage();
+		
+		// Close main scanner to prevent resource leakage
+		mainScanner.close();
 
 	}
 
 	// Start content menu
-	private static void runProgram()
+	private static void runProgram(Scanner userInput)
 	{
-		Scanner userInput = new Scanner(System.in);
+		// Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
 		String userChoice;
 		FilmTitleDescription film = new FilmTitleDescription();
@@ -54,7 +58,8 @@ public class Main {
 				filmDescrib.showFormattedDescription();
 				break;
 			case "4":
-				film.readStoredTitleDescription();
+				film.readStoredTitleDescription(userInput);
+				userInput.nextLine(); //Removing it causes to skip
 				break;
 			case "5":
 				filmTit.readStoredTitle();
@@ -63,7 +68,6 @@ public class Main {
 				filmDescrib.readStoredDescription();
 				break;
 			case "q":
-				userInput.close(); // Prevents a resource leak warning
 				exitProgram = true;
 				break;
 			}
@@ -76,7 +80,7 @@ public class Main {
 	{
 		System.out.println("\n  *************************************************************************");
 		System.out.println("  *****                                                               *****");
-		System.out.println("  *****                       Film generator                          *****");
+		System.out.println("  *****                       Film Generator                          *****");
 		System.out.println("  *****                                                               *****");
 		System.out.println("  *************************************************************************");
 	}
