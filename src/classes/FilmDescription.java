@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FilmDescription extends Film{
 
@@ -102,16 +101,15 @@ public class FilmDescription extends Film{
 		{
 			if(i==0)
 			{
-				printFormattingLine(descriptions.get(i).length()); // Add line to the screen
+				printFormattingLine(descriptions.get(i).length());	// Add line to the screen
 			}
 			System.out.println(descriptions.get(i));
-			printFormattingLine(descriptions.get(i).length()); // Add line to the screen
+			printFormattingLine(descriptions.get(i).length());		// Add line to the screen
 
 		}
 		System.out.println("");
 
 		// Show options to the user
-		Scanner userInput = new Scanner(System.in);
 		String userChoice;
 		System.out.println("    [1] Delete a description");
 		System.out.println("    [2] Save to file");
@@ -135,10 +133,10 @@ public class FilmDescription extends Film{
 	public void showFormattedDescription()
 	{
 		System.out.println("\n    Generated film description:");
-		printFormattingLine(generatedDescription.length());  // Extend dynamic the line as long as the description
-		System.out.println("    "+generatedDescription); // Print the description
+		printFormattingLine(generatedDescription.length());			// Dynamic line as long as the description
+		System.out.println("    "+generatedDescription);			// Print the description
 		printFormattingLine(generatedDescription.length());
-		descriptionOptions(); // What can the user do with the description
+		descriptionOptions();										// What can the user do with the description
 	}
 
 	// Generated description options, regenerate and store in DB
@@ -151,7 +149,6 @@ public class FilmDescription extends Film{
 		System.out.println("");
 		System.out.print("   Choice: ");
 
-		Scanner userInput = new Scanner(System.in);
 		String userChoice= userInput.nextLine().toLowerCase();
 		switch(userChoice) {
 		case "1":

@@ -1,6 +1,8 @@
 package main;
 
 import java.util.Scanner;
+
+import classes.Film;
 import classes.FilmDescription;
 import classes.FilmTitle;
 import classes.FilmTitleDescription;
@@ -10,22 +12,16 @@ public class Main {
 	// Main
 	public static void main(String[] args) {
 
-		// Initialize main scanner
-		Scanner mainScanner = new Scanner(System.in);
-		
 		showWelcome();
-	    runProgram(mainScanner); // Start content menu
+		runProgram(); 		// Start content menu
 		showExitMessage();
-		
-		// Close main scanner to prevent resource leakage
-		mainScanner.close();
 
 	}
 
 	// Start content menu
-	private static void runProgram(Scanner userInput)
+	private static void runProgram()
 	{
-		// Scanner userInput = new Scanner(System.in);
+		Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
 		String userChoice;
 		FilmTitleDescription film = new FilmTitleDescription();
@@ -49,26 +45,27 @@ public class Main {
 
 			switch(userChoice) {
 			case "1":
-				film.showFormattedTitleDescription();
+				film.showFormattedTitleDescription();	// Film title + description
 				break;
 			case "2":
-				filmTit.showFormattedTitle();
+				filmTit.showFormattedTitle();			// Film title
 				break;
 			case "3":
-				filmDescrib.showFormattedDescription();
+				filmDescrib.showFormattedDescription();	// Film description
 				break;
 			case "4":
-				film.readStoredTitleDescription(userInput);
-				userInput.nextLine(); //Removing it causes to skip
+				film.readStoredTitleDescription();		// Read films (titles + descriptions) from database
 				break;
 			case "5":
-				filmTit.readStoredTitle();
+				filmTit.readStoredTitle(); 				// Read separately generated titles from database
 				break;
 			case "6":
-				filmDescrib.readStoredDescription();
+				filmDescrib.readStoredDescription();	// Read separately generated descriptions from database
 				break;
 			case "q":
-				exitProgram = true;
+				exitProgram = true;		// Quit program
+				userInput.close(); 		// Close scanner of (this) Main class
+				Film.closeScanner(); 	// Close scanner of (parent) Film class
 				break;
 			}
 		}
@@ -89,5 +86,5 @@ public class Main {
 	private static void showExitMessage() {
 		System.out.println("\n    Thank you for using this program");
 	}
-	
+
 }

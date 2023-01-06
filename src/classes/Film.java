@@ -1,6 +1,5 @@
 package classes;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +9,9 @@ import java.util.Scanner;
 public abstract class Film {
 
 	// PARENT CLASS
+
+	// Initialize static Scanner for all child classes
+	static Scanner userInput = new Scanner(System.in);
 
 	// Make DB connection
 	static DBConnect myDBConnection = new DBConnect();
@@ -29,7 +31,6 @@ public abstract class Film {
 
 	// Delete item from Title or Description table
 	public void deleteItem(ArrayList<String> keys) {
-		Scanner userInput = new Scanner(System.in);
 		System.out.print("\n    Delete item: ");
 		String input=userInput.nextLine(); // Get userChose number
 		int toDelete = Integer.parseInt(input);
@@ -50,7 +51,7 @@ public abstract class Film {
 			int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
 			if(executeDelete(databasePrimaryKey))
 			{
-				System.out.println("\n    Chosen item deleted");
+				System.out.println("    Chosen item deleted");
 				pressKeyToContinue();
 			}
 			else
@@ -89,7 +90,6 @@ public abstract class Film {
 	// Ask random genre (category) or choose a genre
 	public int assignGenre()
 	{
-		Scanner userInput = new Scanner(System.in);
 		int genre;
 		System.out.println("\n    Assign genre:");
 		System.out.println("");
@@ -132,7 +132,6 @@ public abstract class Film {
 		}
 		System.out.print("\n    Assign genre number: ");
 		// Ask user choice
-		Scanner userInput = new Scanner(System.in);
 
 		String input = userInput.nextLine();
 		int userChoiceGenre=0;
@@ -160,7 +159,6 @@ public abstract class Film {
 	{
 		boolean confirmed = false; // check user confirmation
 		int randomGenre = randomPicker(this.getCategories()); // Call method randomPicker for random int
-		Scanner userInput = new Scanner(System.in);
 		String input;
 		while(!confirmed) // As long as the user not confirmed his choose
 		{
@@ -215,7 +213,6 @@ public abstract class Film {
 
 	// Pause or stop the program till user input
 	public static void pressKeyToContinue() {
-		Scanner userInput = new Scanner(System.in);
 		System.out.println("    Press enter to continue");
 		userInput.nextLine();
 	}
@@ -239,13 +236,19 @@ public abstract class Film {
 				writer.write(System.lineSeparator());
 			}
 			writer.close();
-			System.out.println("\n    Successfully wrote to the file: FilmGen-"+name+".txt");
+			System.out.println("\n    Successfully wrote to the file: FilmGen-"+name+"s.txt");
 			pressKeyToContinue();
 		} catch (IOException e) {
 			System.out.println("\n    An error occurred.");
 			e.printStackTrace();
 			pressKeyToContinue();
 		}
+	}
+
+	// Close scanner
+	public static void closeScanner()
+	{
+		userInput.close();
 	}
 
 	// Getters

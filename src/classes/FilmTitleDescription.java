@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FilmTitleDescription extends Film{
 
@@ -10,8 +9,6 @@ public class FilmTitleDescription extends Film{
 	private String objName; // Used for file name, ..
 	private String generatedTitle; // Store generated title
 	private String generatedDescription; // Store generated description
-	Scanner ftdScanner = new Scanner(System.in); // Initialize scanner for this class
-	
 
 	// Constructor
 	public FilmTitleDescription()
@@ -33,12 +30,12 @@ public class FilmTitleDescription extends Film{
 	public void showFormattedTitleDescription()
 	{
 		System.out.println("\n    Generated film:");
-		printFormattingLine(generatedDescription.length());  // Extend dynamic the line as long as the title
-		System.out.println("    Title:\n    "+generatedTitle); // Print the title
-		printFormattingLine(generatedTitle.length());
-		System.out.println("    Description:\n    "+generatedDescription);
-		printFormattingLine(generatedDescription.length());
-		titleDescriptionOptions(ftdScanner); // What can the user do with the title
+		printFormattingLine(generatedDescription.length());					// Dynamic line as long as the description
+		System.out.println("    Title:\n    "+generatedTitle);				// Print the title
+		printFormattingLine(generatedTitle.length());						// Dynamic line as long as the title
+		System.out.println("    Description:\n    "+generatedDescription);	// Print the description
+		printFormattingLine(generatedDescription.length());					// Dynamic line as long as the description
+		titleDescriptionOptions();
 	}
 
 	// User generate new title
@@ -53,8 +50,8 @@ public class FilmTitleDescription extends Film{
 		this.generatedDescription=description.generateDescription();
 	}
 
-	// Generated film options, regenerate and store in DB
-	private void titleDescriptionOptions(Scanner userInput)
+	// Generated film options, regenerate and store in DB)
+	private void titleDescriptionOptions()
 	{
 		System.out.println("");
 		System.out.println("    [1] Generate another film");
@@ -64,8 +61,6 @@ public class FilmTitleDescription extends Film{
 		System.out.println("\n    Press just enter for main menu");
 		System.out.println("");
 		System.out.print("    Choice: ");
-
-		// Scanner userInput = new Scanner(System.in);
 		String userChoice = userInput.nextLine().toLowerCase();
 
 		switch(userChoice) {
@@ -92,7 +87,6 @@ public class FilmTitleDescription extends Film{
 		default:
 			break;
 		}
-		ftdScanner.reset();
 	}
 
 	// Save generated film to the database
@@ -125,8 +119,9 @@ public class FilmTitleDescription extends Film{
 	}
 
 	// Print a list of the stored films to the user
-	public void readStoredTitleDescription(Scanner userInput)
+	public void readStoredTitleDescription()
 	{
+
 		ArrayList<String> keys = myDBConnection.getFilmForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> films = new ArrayList<>(); // Here we will store the merged film titles and descriptions
 		FilmTitleDescription filmTitleDes = new FilmTitleDescription(); //Create obj for calling delete method in parent class
@@ -169,16 +164,15 @@ public class FilmTitleDescription extends Film{
 		{
 			if(i==0)
 			{
-				printFormattingLine(films.get(i).length()); // Add line to the screen
+				printFormattingLine(films.get(i).length());		// Add line to the screen
 			}
 			System.out.println(films.get(i));
-			printFormattingLine(films.get(i).length()); // Add line to the screen
+			printFormattingLine(films.get(i).length());			// Add line to the screen
 
 		}
 		System.out.println("");
 
 		// Show options to the user
-		// Scanner userInput = new Scanner(System.in);
 		String userChoice;
 		System.out.println("    [1] Delete a film");
 		System.out.println("    [2] Save to file");

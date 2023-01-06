@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FilmTitle extends Film{
 
@@ -102,7 +101,6 @@ public class FilmTitle extends Film{
 		System.out.println("");
 
 		// Show options to the user
-		Scanner userInput = new Scanner(System.in);
 		String userChoice;
 		System.out.println("    [1] Delete a title");
 		System.out.println("    [2] Save to file");
@@ -126,10 +124,10 @@ public class FilmTitle extends Film{
 	public void showFormattedTitle()
 	{
 		System.out.println("\n    Generated film title:");
-		printFormattingLine(generatedTitle.length());  // Extend dynamic the line as long as the title
-		System.out.println("    "+generatedTitle); // Print the title
+		printFormattingLine(generatedTitle.length());		// Dynamic line as long as the title
+		System.out.println("    "+generatedTitle);			// Print the title
 		printFormattingLine(generatedTitle.length());
-		titleOptions(); // What can the user do with the title
+		titleOptions();										// What can the user do with the title
 	}
 
 	// Generated title options, regenerate and store in DB
@@ -142,7 +140,6 @@ public class FilmTitle extends Film{
 		System.out.println("");
 		System.out.print("    Choice: ");
 
-		Scanner userInput = new Scanner(System.in);
 		String userChoice = userInput.nextLine().toLowerCase();
 
 		switch(userChoice) {
