@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class FilmTitleDescription extends Film{
 
-	FilmTitle title = new FilmTitle(); // Title logic
-	FilmDescription description = new FilmDescription(); // Description logic
-	private String objName; // Used for file name, ..
-	private String generatedTitle; // Store generated title
-	private String generatedDescription; // Store generated description
+	FilmTitle title = new FilmTitle(); 						// Title logic
+	FilmDescription description = new FilmDescription(); 	// Description logic
+	private String objName; 								// Used for file name, ..
+	private String generatedTitle;							// Store generated title
+	private String generatedDescription; 					// Store generated description
 
 	// Constructor
 	public FilmTitleDescription()
@@ -145,7 +145,7 @@ public class FilmTitleDescription extends Film{
 			String subject3=getSubjects().get(Integer.parseInt((parts[9]))-1);
 			String location=getLocations().get(Integer.parseInt((parts[10]))-1);
 			// Merge
-			String mergedFilm="    ["+(i+1)+"] Genre: "+ capitalize(genre) + " - Film: "+ capitalize(word1) +" "+ capitalize(word2) + "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ stories +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location; 
+			String mergedFilm=String.format("    %5d Genre: "+ capitalize(genre) + " - Film: "+ capitalize(word1) +" "+ capitalize(word2) + "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ stories +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location, (i+1)); 
 			films.add(mergedFilm); // Add film to ArrayList
 		}
 

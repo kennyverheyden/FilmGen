@@ -37,6 +37,7 @@ public class Main {
 			System.out.println("    [4] Stored generated films");
 			System.out.println("    [5] Stored separately generated titles");
 			System.out.println("    [6] Stored separately generated descriptions");
+			System.out.println("    [7] Database statistics");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -61,6 +62,9 @@ public class Main {
 				break;
 			case "6":
 				filmDescrib.readStoredDescription();	// Read separately generated descriptions from database
+				break;
+			case "7":
+				film.databaseStats();					// Show database statistics
 				break;
 			case "q":
 				exitProgram = true;		// Quit program

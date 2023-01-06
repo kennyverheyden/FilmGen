@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class FilmTitle extends Film{
 
-	private String generatedTitle; // Store generated title
-	private String objName; // Used for file name, ..
+	private String generatedTitle; 	// Store generated title
+	private String objName; 		// Used for file name, ..
 
 	// Index of elements for DB operations
 	private int indexOfWord;
@@ -73,7 +73,7 @@ public class FilmTitle extends Film{
 			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
 
-			String mergedTitle="    ["+(i+1)+"] Genre: "+ capitalize(getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase())+" - "+capitalize(getWords().get(Integer.parseInt((parts[2]))-1))+ " " +capitalize(getWords().get(Integer.parseInt((parts[3]))-1))+""; 
+			String mergedTitle=String.format("    %5d Genre: "+ capitalize(getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase())+" - "+capitalize(getWords().get(Integer.parseInt((parts[2]))-1))+ " " +capitalize(getWords().get(Integer.parseInt((parts[3]))-1)),(i+1)); 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
 

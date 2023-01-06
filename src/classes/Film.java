@@ -229,10 +229,14 @@ public abstract class Film {
 	public void writeToFile(String name, ArrayList<String> list)
 	{
 		try {
-			FileWriter writer = new FileWriter("FilmGen - "+name+".txt");
+			FileWriter writer = new FileWriter("FilmGen - "+name+"s.txt");
+			writer.write("FilmGen - "+name+"s");
+			writer.write(System.lineSeparator());
+			writer.write(System.lineSeparator());
 			for(int i=0;i<list.size();i++)
 			{
 				writer.write(list.get(i));
+				writer.write(System.lineSeparator());
 				writer.write(System.lineSeparator());
 			}
 			writer.close();
@@ -243,6 +247,26 @@ public abstract class Film {
 			e.printStackTrace();
 			pressKeyToContinue();
 		}
+	}
+
+	// Database statistics
+	public void databaseStats()
+	{
+		System.out.println("\n    Database statistics");
+		System.out.println("    --------------------\n");
+		System.out.println("    Amount of data stored in database:");
+		System.out.printf("\n    %8d words", myDBConnection.getWords().size());
+		System.out.printf("\n    %8d verbs", myDBConnection.getVerbs().size());
+		System.out.printf("\n    %8d subjects", myDBConnection.getSubjects().size());
+		System.out.printf("\n    %8d stories", myDBConnection.getStories().size());
+		System.out.printf("\n    %8d locations", myDBConnection.getLocations().size());
+		System.out.printf("\n    %8d hyperbolics", myDBConnection.getHyperbolic().size());
+		System.out.printf("\n    %8d genres", myDBConnection.getCategorie().size());
+		System.out.printf("\n    %8d generated films (title + descripton)", myDBConnection.getFilmForeignKeys().size());
+		System.out.printf("\n    %8d generated titles", myDBConnection.getTitleForeignKeys().size());
+		System.out.printf("\n    %8d generated subjecs", myDBConnection.getDescriptionForeignKeys().size());
+		System.out.println("\n");
+		pressKeyToContinue();
 	}
 
 	// Close scanner

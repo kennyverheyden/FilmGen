@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class FilmDescription extends Film{
 
-	private String generatedDescription; // Store generated description
-	private String objName; // Used for file name, ..
+	private String generatedDescription; 	// Store generated description
+	private String objName; 				// Used for file name, ..
 
 	// Fields: Index of elements for DB operations
 	private int indexOfhyperbolic;
@@ -34,7 +34,6 @@ public class FilmDescription extends Film{
 	// Generate description
 	public String generateDescription() 
 	{
-
 		String generatedDescription; // Generated description
 
 		// Assign random content to fields
@@ -82,7 +81,7 @@ public class FilmDescription extends Film{
 			String subject3=getSubjects().get(Integer.parseInt((parts[7]))-1);
 			String location=getLocations().get(Integer.parseInt((parts[8]))-1);
 			// Merge
-			String mergedDescription="    ["+(i+1)+"] Genre: "+ capitalize(genre) + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location; 
+			String mergedDescription=String.format("    %5d Genre: "+ capitalize(genre) + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location, (i+1)); 
 			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
