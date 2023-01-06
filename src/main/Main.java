@@ -84,7 +84,7 @@ public class Main {
 
 	// Show message when the program closes
 	private static void showExitMessage() {
-		System.out.println("\n    Thank you for using this program");
+		System.out.println("\n    Thank you for using this program!");
 	}
 
 }
