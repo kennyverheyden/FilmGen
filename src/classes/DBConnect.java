@@ -15,6 +15,9 @@ public class DBConnect {
 	ResultSet resultSet;
 	String sqlQuery;
 
+	// Initialize Scanner for this class
+	Scanner dbInput = new Scanner(System.in);
+
 	// Relative path to database file
 	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite";
 
@@ -38,10 +41,9 @@ public class DBConnect {
 	//		}
 	//	}
 
-	// View stored data in database
+	// View or edit stored data in database
 	public void databaseView() throws SQLException
 	{
-		Scanner dbInput = new Scanner(System.in);
 		String userChoice;
 		System.out.println("");
 		System.out.println("    Choose a table:");
@@ -55,28 +57,35 @@ public class DBConnect {
 		System.out.println("\n    Press just enter for main menu");
 		System.out.println("");
 		System.out.print("    Choice: ");
-		userChoice=dbInput.nextLine().toLowerCase();
+		userChoice=dbInput.nextLine().toString();
 		switch(userChoice) {
 		case "1":
 			readTable(getWords());
+			showEditOptions("words","word");  				// Parameters tableName, columnName
 			break;
 		case "2":
 			readTable(getVerbs());
+			showEditOptions("verbs","verbs"); 				// Parameters tableName, columnName
 			break;
 		case "3":
 			readTable(getSubjects());
+			showEditOptions("subjects","subjects"); 		// Parameters tableName, columnName
 			break;
 		case "4":
 			readTable(getStories());
+			showEditOptions("stories","stories"); 			// Parameters tableName, columnName
 			break;
 		case "5":
 			readTable(getLocations());
+			showEditOptions("locations","locations"); 		// Parameters tableName, columnName
 			break;
 		case "6":
-			readTable(getHyperbolic());
+			readTable(getHyperbolics());
+			showEditOptions("hyperbolic","hyperbolic"); 	// Parameters tableName, columnName
 			break;
 		case "7":
-			readTable(getCategorie());
+			readTable(getCategories());
+			showEditOptions("categories","category"); 		// Parameters tableName, columnName
 			break;
 		default :
 			break;
@@ -84,21 +93,206 @@ public class DBConnect {
 		System.out.println("");
 	}
 
-	// Read records of a table
+	// Show edit options to the user
+	private void showEditOptions(String tableName, String columnName)
+	{
+		String userChoice;
+		System.out.println("    [1] Insert data");
+		System.out.println("    [2] Delete data");
+		System.out.println("\n    Press just enter for main menu");
+		System.out.println("");
+		System.out.print("    Choice: ");
+		userChoice=dbInput.nextLine().toString();
+		switch(userChoice)
+		{
+		case "1":
+			// Ask value to insert in db
+			askInsertContent(tableName,columnName);		// Parameters tableName columnName
+			break;
+		case "2":
+			// Ask value to delete in db
+			askDeleteContent(tableName,columnName);		// Parameters tableName columnName
+			break;
+		default :
+			break;
+		}
+	}
+
+	// Check if userInput is integer
+	private boolean isNumeric(String str) {
+		if (str == null) {
+			return false;
+		}
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+	}
+
+	// If the user select a record by number id - Search value by id
+	private String getIDbyString(String tableName, int id)
+	{
+		String str=null; // Store found value to return
+		switch(tableName)
+		{
+		case "words":
+			str=searchStringById(getWords(),id);
+			break;
+		case "verbs":
+			str=searchStringById(getVerbs(),id);
+			break;
+		case "subjects":
+			str=searchStringById(getSubjects(),id);
+			break;
+		case "stories":
+			str=searchStringById(getStories(),id);
+			break;
+		case "locations":
+			str=searchStringById(getLocations(),id);
+			break;
+		case "hyperbolic":
+			str=searchStringById(getHyperbolics(),id);
+			break;
+		case "categories":
+			str=searchStringById(getCategories(),id);
+			break;
+		default :
+			break;
+		}
+		return str;
+	}
+
+	//	Called by getIDbyString() method - Search value by id number in ArrayList
+	private String searchStringById(ArrayList<String> records, int id)
+	{
+		String str=null;
+		if(id<(records.size()+1) && id!=0)
+		{
+			str=records.get(id-1); 	// id -1 because array starts from 0
+		}
+		else
+		{
+			System.out.println("\n    Invalid id number or number out of range");
+		}
+		return str;
+	}
+
+	// Scan an entry from user to delete a record
+	private void askDeleteContent(String tableName, String columnName)
+	{
+		System.out.print("    Type value or number to delete: ");
+		String str = dbInput.nextLine().toString();
+		String value=null; // Store value to delete
+		if(!str.equals(""))
+		{
+			// Check if user input is String or number (Id)
+			if(isNumeric(str))
+			{
+				int id = Integer.parseInt(str);
+				value=getIDbyString(tableName,id);
+			}
+			else
+			{
+				value=str;
+			}
+			// Delete record
+			boolean succes=deleteQuery(tableName,columnName,value);
+			if(succes)
+			{
+				System.out.println("\n    Successfully deleted");
+				Film.pressKeyToContinue();
+			}
+			else
+			{
+				System.out.println("    Value not deleted\n");
+				Film.pressKeyToContinue();
+			}
+		}
+	}
+
+	// Delete a record determined by user
+	private boolean deleteQuery(String tableName, String columnName, String str)
+	{
+		sqlQuery="DELETE FROM main."+tableName+" WHERE "+columnName+" = ?";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, str);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				return true; 	// Delete success
+			}
+			else
+			{
+				return false; 	// Delete unsuccessful
+			}
+
+		}catch(Exception e){
+			System.out.println(e); // In case of error
+		}
+		return false;
+	}
+
+	// Scan an entry from user to insert a record to a database table
+	private void askInsertContent(String tableName, String columnName)
+	{
+		System.out.print("    Insert new value: ");
+		String str = dbInput.nextLine().toString();
+		if(!str.equals(""))
+		{
+			String sqlQuery = "INSERT INTO main."+tableName+" ("+columnName+") VALUES ('"+str+"')";
+			boolean succes=insertQuery(sqlQuery);
+			if(succes)
+			{
+				System.out.println("\n    Successfully added");
+			}
+			else
+			{
+				System.out.println("\n    Error adding");
+			}
+		}
+		Film.pressKeyToContinue();
+	}
+
+	// Insert content to tables
+	private boolean insertQuery(String str)
+	{
+		sqlQuery=str;
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			int row=preparedStatement.executeUpdate();
+			if(row==1)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return false;
+	}
+
+	// Read records of a table (ArrayList getters)
 	private void readTable(ArrayList<String> table)
 	{
-		System.out.print("\n    ");
+		System.out.print("\n    | "); // Formatting
 		for(int i=0;i<table.size();i++)
 		{
-			if(i%10==0 && i !=0)
+			if(i%10==0 && i !=0) 			// Formatting: new line after 10 values
 			{
-				System.out.println("");
-				System.out.print("    ");
+				System.out.println("");		// Break line
+				System.out.print("    | "); // Add spaces
 			}
-			System.out.print((i+1)+" "+table.get(i)+" ");
+			System.out.print((i+1)+" "+table.get(i)+" | "); // Print values
 		}
 		System.out.println("\n");
-		Film.pressKeyToContinue();
 	}
 
 	// Database statistics
@@ -112,8 +306,8 @@ public class DBConnect {
 		System.out.printf("\n    %8d subjects", getSubjects().size());
 		System.out.printf("\n    %8d stories", getStories().size());
 		System.out.printf("\n    %8d locations", getLocations().size());
-		System.out.printf("\n    %8d hyperbolics", getHyperbolic().size());
-		System.out.printf("\n    %8d genres", getCategorie().size());
+		System.out.printf("\n    %8d hyperbolics", getHyperbolics().size());
+		System.out.printf("\n    %8d genres", getCategories().size());
 		System.out.printf("\n    %8d generated films (title + descripton)", getFilmForeignKeys().size());
 		System.out.printf("\n    %8d generated titles", getTitleForeignKeys().size());
 		System.out.printf("\n    %8d generated subjecs", getDescriptionForeignKeys().size());
@@ -340,7 +534,7 @@ public class DBConnect {
 	}
 
 	// Getters for DB
-	public ArrayList<String> getCategorie()
+	public ArrayList<String> getCategories()
 	{
 		ArrayList<String> categories = new ArrayList<>();
 		sqlQuery="select category from categories";
@@ -358,7 +552,7 @@ public class DBConnect {
 		return(categories);
 	}
 
-	public ArrayList<String> getHyperbolic()
+	public ArrayList<String> getHyperbolics()
 	{
 		ArrayList<String> hyperbolic = new ArrayList<>();
 		sqlQuery="select hyperbolic from hyperbolic";
@@ -464,6 +658,12 @@ public class DBConnect {
 			System.out.println("Error in connection");
 		}
 		return(words);
+	}
+
+	// Close the scanner
+	public void closeScanner()
+	{
+		dbInput.close();
 	}
 
 }

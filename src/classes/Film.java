@@ -17,8 +17,8 @@ public abstract class Film {
 	static DBConnect myDBConnection = new DBConnect();
 
 	// Tables of DB loaded separately in ArrayLists
-	static ArrayList<String> categories = myDBConnection.getCategorie();
-	static ArrayList<String> hyperbolics = myDBConnection.getHyperbolic();
+	static ArrayList<String> categories = myDBConnection.getCategories();
+	static ArrayList<String> hyperbolics = myDBConnection.getHyperbolics();
 	static ArrayList<String> locations = myDBConnection.getLocations();
 	static ArrayList<String> stories = myDBConnection.getStories();
 	static ArrayList<String> subjects = myDBConnection.getSubjects();

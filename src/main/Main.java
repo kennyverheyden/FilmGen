@@ -41,7 +41,7 @@ public class Main {
 			System.out.println("    [5] Stored separately generated titles");
 			System.out.println("    [6] Stored separately generated descriptions");
 			System.out.println("    [7] Database statistics");
-			System.out.println("    [8] View database");
+			System.out.println("    [8] View or edit database");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -68,19 +68,20 @@ public class Main {
 				filmDescrib.readStoredDescription();	// Read separately generated descriptions from database
 				break;
 			case "7":
-				dbConnect.databaseStats();						// Show database statistics
+				dbConnect.databaseStats();				// Show database statistics
 				break;
 			case "8": 									
 				try {
-					dbConnect.databaseView(); 					// View the database
+					dbConnect.databaseView(); 			// View or edit the database
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}		
 				break;
 			case "q":
-				exitProgram = true;		// Quit program
-				userInput.close(); 		// Close scanner of (this) Main class
-				Film.closeScanner(); 	// Close scanner of (parent) Film class
+				exitProgram = true;			// Quit program
+				userInput.close(); 			// Close scanner of (this) Main class
+				Film.closeScanner(); 		// Close scanner of (parent) Film class
+				dbConnect.closeScanner(); 	// Close scanner of DBConnect class
 				break;
 			}
 		}
