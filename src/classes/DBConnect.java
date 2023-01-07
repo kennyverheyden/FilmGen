@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DBConnect {
 
@@ -35,6 +37,89 @@ public class DBConnect {
 	//
 	//		}
 	//	}
+
+	// View stored data in database
+	public void databaseView() throws SQLException
+	{
+		Scanner dbInput = new Scanner(System.in);
+		String userChoice;
+		System.out.println("");
+		System.out.println("    Choose a table:");
+		System.out.println("    [1] Words");
+		System.out.println("    [2] Verbs");
+		System.out.println("    [3] Subjects");
+		System.out.println("    [4] Stories");
+		System.out.println("    [5] Locations");
+		System.out.println("    [6] Hyperbolics");
+		System.out.println("    [7] Genres");
+		System.out.println("\n    Press just enter for main menu");
+		System.out.println("");
+		System.out.print("    Choice: ");
+		userChoice=dbInput.nextLine().toLowerCase();
+		switch(userChoice) {
+		case "1":
+			readTable(getWords());
+			break;
+		case "2":
+			readTable(getVerbs());
+			break;
+		case "3":
+			readTable(getSubjects());
+			break;
+		case "4":
+			readTable(getStories());
+			break;
+		case "5":
+			readTable(getLocations());
+			break;
+		case "6":
+			readTable(getHyperbolic());
+			break;
+		case "7":
+			readTable(getCategorie());
+			break;
+		default :
+			break;
+		}
+		System.out.println("");
+	}
+
+	// Read records of a table
+	private void readTable(ArrayList<String> table)
+	{
+		System.out.print("\n    ");
+		for(int i=0;i<table.size();i++)
+		{
+			if(i%10==0 && i !=0)
+			{
+				System.out.println("");
+				System.out.print("    ");
+			}
+			System.out.print((i+1)+" "+table.get(i)+" ");
+		}
+		System.out.println("\n");
+		Film.pressKeyToContinue();
+	}
+
+	// Database statistics
+	public void databaseStats()
+	{
+		System.out.println("\n    Database statistics");
+		System.out.println("    --------------------\n");
+		System.out.println("    Amount of data stored in database:");
+		System.out.printf("\n    %8d words", getWords().size());
+		System.out.printf("\n    %8d verbs", getVerbs().size());
+		System.out.printf("\n    %8d subjects", getSubjects().size());
+		System.out.printf("\n    %8d stories", getStories().size());
+		System.out.printf("\n    %8d locations", getLocations().size());
+		System.out.printf("\n    %8d hyperbolics", getHyperbolic().size());
+		System.out.printf("\n    %8d genres", getCategorie().size());
+		System.out.printf("\n    %8d generated films (title + descripton)", getFilmForeignKeys().size());
+		System.out.printf("\n    %8d generated titles", getTitleForeignKeys().size());
+		System.out.printf("\n    %8d generated subjecs", getDescriptionForeignKeys().size());
+		System.out.println("\n");
+		Film.pressKeyToContinue();
+	}
 
 	// Delete a generated film
 	public boolean deleteFilm(int PK)
@@ -255,7 +340,7 @@ public class DBConnect {
 	}
 
 	// Getters for DB
-	public ArrayList getCategorie()
+	public ArrayList<String> getCategorie()
 	{
 		ArrayList<String> categories = new ArrayList<>();
 		sqlQuery="select category from categories";
@@ -273,7 +358,7 @@ public class DBConnect {
 		return(categories);
 	}
 
-	public ArrayList getHyperbolic()
+	public ArrayList<String> getHyperbolic()
 	{
 		ArrayList<String> hyperbolic = new ArrayList<>();
 		sqlQuery="select hyperbolic from hyperbolic";
@@ -291,7 +376,7 @@ public class DBConnect {
 		return(hyperbolic);
 	}
 
-	public ArrayList getLocations()
+	public ArrayList<String> getLocations()
 	{
 		ArrayList<String> locations = new ArrayList<>();
 		sqlQuery="select locations from locations";
@@ -309,7 +394,7 @@ public class DBConnect {
 		return(locations);
 	}
 
-	public ArrayList getStories()
+	public ArrayList<String> getStories()
 	{
 		ArrayList<String> stories = new ArrayList<>();
 		sqlQuery="select stories from stories";
@@ -327,7 +412,7 @@ public class DBConnect {
 		return(stories);
 	}
 
-	public ArrayList getSubjects()
+	public ArrayList<String> getSubjects()
 	{
 		ArrayList<String> subjects = new ArrayList<>();
 		sqlQuery="select subjects from subjects";
@@ -345,7 +430,7 @@ public class DBConnect {
 		return(subjects);
 	}
 
-	public ArrayList getVerbs()
+	public ArrayList<String> getVerbs()
 	{
 		ArrayList<String> verbs = new ArrayList<>();
 		sqlQuery="select verbs from verbs";
@@ -363,7 +448,7 @@ public class DBConnect {
 		return(verbs);
 	}
 
-	public ArrayList getWords()
+	public ArrayList<String> getWords()
 	{
 		ArrayList<String> words = new ArrayList<>();
 		sqlQuery="select word from words";

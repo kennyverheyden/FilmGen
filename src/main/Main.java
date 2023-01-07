@@ -1,7 +1,9 @@
 package main;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import classes.DBConnect;
 import classes.Film;
 import classes.FilmDescription;
 import classes.FilmTitle;
@@ -27,6 +29,7 @@ public class Main {
 		FilmTitleDescription film = new FilmTitleDescription();
 		FilmTitle filmTit = new FilmTitle();
 		FilmDescription filmDescrib = new FilmDescription();
+		DBConnect dbConnect = new DBConnect();		// For database statistics and viewing the tables
 
 		do
 		{
@@ -38,6 +41,7 @@ public class Main {
 			System.out.println("    [5] Stored separately generated titles");
 			System.out.println("    [6] Stored separately generated descriptions");
 			System.out.println("    [7] Database statistics");
+			System.out.println("    [8] View database");
 			System.out.println(" ");
 			System.out.println("    Press [q] to quit");
 			System.out.println("");
@@ -64,7 +68,14 @@ public class Main {
 				filmDescrib.readStoredDescription();	// Read separately generated descriptions from database
 				break;
 			case "7":
-				film.databaseStats();					// Show database statistics
+				dbConnect.databaseStats();						// Show database statistics
+				break;
+			case "8": 									
+				try {
+					dbConnect.databaseView(); 					// View the database
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}		
 				break;
 			case "q":
 				exitProgram = true;		// Quit program
