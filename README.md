@@ -2,9 +2,11 @@
 
 <h3>The idea</h3>
 
-The idea of this program is that it generates the title and description of a movie by randomly grabbing words from a database.
+The idea of this program is that it <strong>generates the title and description of a movie</strong> by randomly grabbing words from a database.
 
 This idea is based on sakhila_master's database, in which the movie table shows all generated movies instead of actual movies.
+
+Output of this program can <strong>stored in the database</strong> and <strong>write to a text file</strong>.
 
 <h3>How will it work</h3>
 
@@ -24,6 +26,11 @@ The indefinite article is dynamic of the next word.
 
 <h3>Database</h3>
 
-All generated titles & descriptions are stored in a relational database with foreign keys.
+The database is used in <strong>SQLite</strong>.
 
-The database is used in SQLite.
+All generated titles & descriptions are stored in a relational database with <strong>foreign keys</strong>.
+
+User can edit database by adding and deleting values to the tables.
+
+<strong>Referential integrity</strong>, restrict delete. User cannot delete a value in the database when a foreign key points to it.
+
