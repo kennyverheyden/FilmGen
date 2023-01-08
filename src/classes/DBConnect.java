@@ -85,7 +85,7 @@ public class DBConnect {
 			case "5":
 				name = "Stored locations";
 				readTable(getLocations(),name);
-				showEditOptions("locations","locations"); 		// Parameters tableName, columnName
+				showEditOptions("locations","location"); 		// Parameters tableName, columnName
 				break;
 			case "6":
 				name = "Stored hyperbolics";
@@ -260,17 +260,50 @@ public class DBConnect {
 	{
 		System.out.print("    Insert new value: ");
 		String str = dbInput.nextLine().toString();
+
+
 		if(!str.equals(""))
 		{
-			String sqlQuery = "INSERT INTO main."+tableName+" ("+columnName+") VALUES ('"+str+"')";
-			boolean succes=insertQuery(sqlQuery);
-			if(succes)
+			if(tableName.equals("words") && str.length()>15) // Max allowed length for category due formatting
 			{
-				System.out.println("\n    Successfully added");
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 15");
+			}
+			else if(tableName.equals("verbs") && str.length()>30) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 30");
+			}
+			else if(tableName.equals("subjects") && str.length()>35) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 35");
+			}
+			else if(tableName.equals("stories") && str.length()>15) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 15");
+			}
+			else if(tableName.equals("locations") && str.length()>25) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 25");
+			}
+			else if(tableName.equals("hyperbolic") && str.length()>15) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 15");
+			}
+			else if(tableName.equals("categories") && str.length()>12) // Max allowed length for category due formatting
+			{
+				System.out.println("\n    Error adding: max value length for "+columnName+" is 12");
 			}
 			else
 			{
-				System.out.println("\n    Error adding");
+				String sqlQuery = "INSERT INTO main."+tableName+" ("+columnName+") VALUES ('"+str+"')";
+				boolean succes=insertQuery(sqlQuery);
+				if(succes)
+				{
+					System.out.println("\n    Successfully added");
+				}
+				else
+				{
+					System.out.println("\n    Error adding");
+				}
 			}
 		}
 		Film.pressKeyToContinue();
@@ -704,13 +737,13 @@ public class DBConnect {
 	public String getLocationByFK(int fk)
 	{
 		String location = null;
-		sqlQuery="select loc from locations where loc_id=?";
+		sqlQuery="select location from locations where loc_id=?";
 		try {
 			c=DriverManager.getConnection(url);
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, fk);
 			ResultSet resultSet=preparedStatement.executeQuery();
-			location=resultSet.getString("loc");
+			location=resultSet.getString("location");
 			resultSet.close();
 		}catch(Exception e) {
 			System.out.println("Error in connection");
@@ -722,14 +755,14 @@ public class DBConnect {
 	public ArrayList<String> getLocations()
 	{
 		ArrayList<String> locations = new ArrayList<>();
-		sqlQuery="select loc from locations";
+		sqlQuery="select location from locations";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				locations.add(resultSet.getString("loc")); 
+				locations.add(resultSet.getString("location")); 
 			}
 			resultSet.close();
 		}catch(Exception e){

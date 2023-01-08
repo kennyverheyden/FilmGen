@@ -145,7 +145,7 @@ public class FilmTitleDescription extends Film{
 			String subject3=myDBConnection.getSubjectByFK(Integer.parseInt(parts[9]));
 			String location=myDBConnection.getLocationByFK(Integer.parseInt(parts[10]));
 			// Merge
-			String mergedTitle=String.format("Genre: "+genre+" - Film: "+ word1 +" "+word2);
+			String mergedTitle=String.format("Genre: %-12s | Film: "+ word1 +" "+word2,genre);
 			String mergedFilm=String.format("    %5d "+ mergedTitle+"\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ story +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location,(i+1)); 
 			films.add(mergedFilm); // Add film to ArrayList
 			titles.add(mergedTitle); // For formatting to know the length of the title for the divider line

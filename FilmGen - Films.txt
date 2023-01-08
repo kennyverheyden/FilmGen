@@ -1,41 +1,41 @@
 FilmGen - Films
 
-        1 Genre: Drama - Film: Skeleton Jurassic
+        1 Genre: Drama        | Film: Skeleton Jurassic
     Description: An emotional epistle of an AI and an unstoppable force who must assassinate a knight in the Canadian Rockies
 
-        2 Genre: Animation - Film: Penguin Egg
+        2 Genre: Animation    | Film: Penguin Egg
     Description: An epic saga of a pilot and an unstoppable force who must chase an eldritch abomination in the Gulf of Mexico
 
-        3 Genre: Family - Film: Penguin Egg
+        3 Genre: Family       | Film: Penguin Egg
     Description: An epic saga of a pilot and an unstoppable force who must chase an eldritch abomination in the Gulf of Mexico
 
-        4 Genre: Music - Film: Alternate Man
+        4 Genre: Music        | Film: Alternate Man
     Description: An amusing saga of a lumberjack and Jan Smit who must recover a king in the White House
 
-        5 Genre: Travel - Film: Top Final
+        5 Genre: Travel       | Film: Top Final
     Description: A fast-paced panorama of Jan Smit and a pilot who must sink a frisbee in Tokyo
 
-        6 Genre: Foreign - Film: Portal Class
+        6 Genre: Foreign      | Film: Portal Class
     Description: A magnificent musical of a dwarf and Kabouter Plop who must destroy a knight in the Gulf of Mexico
 
-        7 Genre: Travel - Film: Short Dance
+        7 Genre: Travel       | Film: Short Dance
     Description: An electrifying odyssey of an unstoppable force and a gnome who must destroy Bumba in Tokyo
 
-        8 Genre: Drama - Film: Team Object
+        8 Genre: Drama        | Film: Team Object
     Description: An intense musical of an eldritch abomination and an alchemist who must chase Mario in Morocco
 
-        9 Genre: Foreign - Film: Beyond Final
+        9 Genre: Foreign      | Film: Beyond Final
     Description: An astounding reflection of Bumba and a dinosaur who must dance with a lumberjack in Mars
 
-       10 Genre: Travel - Film: Beyond Final
+       10 Genre: Travel       | Film: Beyond Final
     Description: An astounding reflection of Bumba and a dinosaur who must dance with a lumberjack in Mars
 
-       11 Genre: Drama - Film: Avatar Violence
+       11 Genre: Drama        | Film: Avatar Violence
     Description: An astounding reflection of a tank and a dinosaur who must chase a dinosaur in Tokyo
 
-       12 Genre: Action - Film: Fortress Penguin
+       12 Genre: Action       | Film: Fortress Penguin
     Description: A breathtaking reflection of a taxi driver and an unstoppable force who must sink an unstoppable force in the Moon
 
-       13 Genre: Comedy - Film: Arena Integer
+       13 Genre: Comedy       | Film: Arena Integer
     Description: An intrepid documentary of a high school student and a bodyguard who must duel with a bodyguard in Brazil
 
