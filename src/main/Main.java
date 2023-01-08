@@ -26,11 +26,12 @@ public class Main {
 		Scanner userInput = new Scanner(System.in);
 		boolean exitProgram = false;
 		String userChoice;
+		
 		FilmTitleDescription film = new FilmTitleDescription();
 		FilmTitle filmTit = new FilmTitle();
 		FilmDescription filmDescrib = new FilmDescription();
 		DBConnect dbConnect = new DBConnect();		// For database statistics and viewing the tables
-
+		
 		do
 		{
 			System.out.println("");
@@ -75,7 +76,7 @@ public class Main {
 					dbConnect.databaseView(); 			// View or edit the database
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}		
+				}
 				break;
 			case "q":
 				exitProgram = true;			// Quit program

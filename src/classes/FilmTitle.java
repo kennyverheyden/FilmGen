@@ -64,16 +64,19 @@ public class FilmTitle extends Film{
 		ArrayList<String> keys = myDBConnection.getTitleForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> titles = new ArrayList<>(); // Here we will store the merged titles
 		FilmTitle filmTit = new FilmTitle(); // Create obj for calling delete method in parent class
+		ArrayList<Integer> pkListTitle = new ArrayList<Integer>(); // Here we store primary keys for the delete option
 		// Merge the titles
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" ");
-			// Retrieve a record and split to array by space
-			// Here we merge to one complete title in template
-			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
-			// The index number is the foreign key number stored in the parts array
+			String[] parts = keys.get(i).split(" ");	// Retrieve a record and split to array by space
+			pkListTitle.add(Integer.parseInt(parts[0])); 	// Primary key
 
-			String mergedTitle=String.format("    %5d Genre: "+ capitalize(getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase())+" - "+capitalize(getWords().get(Integer.parseInt((parts[2]))-1))+ " " +capitalize(getWords().get(Integer.parseInt((parts[3]))-1)),(i+1)); 
+			// Here we merge to one complete title in template
+			String genre=capitalize(myDBConnection.getCategoryByFK(Integer.parseInt(parts[1])));
+			String word1 = capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[2])));
+			String word2 = capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[3])));
+
+			String mergedTitle=String.format("    %5d Genre: "+genre+" - "+word1+ " " +word2,(i+1)); 
 			titles.add(mergedTitle); // Add title to ArrayList
 		}
 
@@ -110,7 +113,7 @@ public class FilmTitle extends Film{
 		userChoice=userInput.nextLine().toLowerCase();
 		switch(userChoice) {
 		case "1":
-			filmTit.deleteItem(keys);
+			filmTit.deleteItem(pkListTitle);
 			break;
 		case "2":
 			writeToFile(objName,titles);

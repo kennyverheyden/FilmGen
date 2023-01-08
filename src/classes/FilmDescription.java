@@ -1,6 +1,7 @@
 package classes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FilmDescription extends Film{
 
@@ -9,11 +10,11 @@ public class FilmDescription extends Film{
 
 	// Fields: Index of elements for DB operations
 	private int indexOfhyperbolic;
-	private int indexOfStories;
+	private int indexOfStory;
 	private int indexOfSubject1;
 	private int indexOfSubject2;
 	private int indexOfSubject3;
-	private int indexOfVerbs;
+	private int indexOfVerb;
 	private int indexOfLocation;
 
 	// Constructor
@@ -40,7 +41,7 @@ public class FilmDescription extends Film{
 		String hyperbolic=hyperbolics.get(randomPicker(hyperbolics));
 		indexOfhyperbolic=hyperbolics.indexOf(hyperbolic);
 		String story=stories.get(randomPicker(stories));
-		indexOfStories=stories.indexOf(story);
+		indexOfStory=stories.indexOf(story);
 		String subject1=subjects.get(randomPicker(subjects));
 		indexOfSubject1=subjects.indexOf(subject1);
 		String subject2=subjects.get(randomPicker(subjects));
@@ -48,7 +49,7 @@ public class FilmDescription extends Film{
 		String subject3=subjects.get(randomPicker(subjects));
 		indexOfSubject3=subjects.indexOf(subject3);
 		String verb=verbs.get(randomPicker(verbs));
-		indexOfVerbs=verbs.indexOf(verb);
+		indexOfVerb=verbs.indexOf(verb);
 		String location=locations.get(randomPicker(locations));
 		indexOfLocation=locations.indexOf(location);
 
@@ -64,24 +65,24 @@ public class FilmDescription extends Film{
 		ArrayList<String> keys = myDBConnection.getDescriptionForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> descriptions = new ArrayList<>(); // Here we will store the merged descriptions
 		FilmDescription filmDes = new FilmDescription(); //Create obj for calling delete method in parent class
+		ArrayList<Integer> pkListDescription = new ArrayList<Integer>(); // Here we store primary keys for the delete option
 		// Merge the descriptions
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+			String[] parts = keys.get(i).split(" "); 	// Retrieve a record and split to array by space
+			pkListDescription.add(Integer.parseInt(parts[0])); 	// Primary key
 
 			// Here we merge to one complete description in template
-			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
-			// The index number is the foreign key number stored in the parts array
-			String genre= getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase();
-			String hyperbolic=getHyperbolics().get(Integer.parseInt((parts[2]))-1);
-			String story=getStories().get(Integer.parseInt((parts[3]))-1);
-			String subject1=getSubjects().get(Integer.parseInt((parts[4]))-1);
-			String subject2=getSubjects().get(Integer.parseInt((parts[5]))-1);
-			String verb=getVerbs().get(Integer.parseInt((parts[6]))-1);
-			String subject3=getSubjects().get(Integer.parseInt((parts[7]))-1);
-			String location=getLocations().get(Integer.parseInt((parts[8]))-1);
+			String genre= capitalize(myDBConnection.getCategoryByFK(Integer.parseInt(parts[1])));
+			String hyperbolic=myDBConnection.getHyperbolicByFK(Integer.parseInt(parts[2]));
+			String story=myDBConnection.getStoryByFK(Integer.parseInt(parts[3]));
+			String subject1=myDBConnection.getSubjectByFK(Integer.parseInt(parts[4]));
+			String subject2=myDBConnection.getSubjectByFK(Integer.parseInt(parts[5]));
+			String verb=myDBConnection.getVerbByFK(Integer.parseInt(parts[6]));
+			String subject3=myDBConnection.getSubjectByFK(Integer.parseInt(parts[7]));
+			String location=myDBConnection.getLocationByFK(Integer.parseInt(parts[8]));
 			// Merge
-			String mergedDescription=String.format("    %5d Genre: "+ capitalize(genre) + " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location, (i+1)); 
+			String mergedDescription=String.format("    %5d Genre: "+genre+ " - "+ capitalize(articleWord(hyperbolic)) + " "+ hyperbolic + " " + story + " of "+ subject1 +" and "+ subject2 +" who must "+ verb +" "+ subject3 + " in "+ location, (i+1)); 
 			descriptions.add(mergedDescription); // Add description to ArrayList
 		}
 
@@ -118,7 +119,7 @@ public class FilmDescription extends Film{
 		userChoice=userInput.nextLine().toLowerCase();
 		switch(userChoice) {
 		case "1":
-			filmDes.deleteItem(keys);
+			filmDes.deleteItem(pkListDescription);
 			break;
 		case "2":
 			writeToFile(objName,descriptions);
@@ -166,7 +167,7 @@ public class FilmDescription extends Film{
 	private void storeGeneratedDescription() {
 		int userChoiceGenre=assignGenre(); // Ask genre to assign
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
-		boolean success=myDBConnection.insertDescriptionIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStories+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
+		boolean success=myDBConnection.insertDescriptionIndex(userChoiceGenre, indexOfhyperbolic+1, indexOfStory+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerb+1, indexOfSubject3+1, indexOfLocation+1);
 		if(success)
 		{
 			System.out.println("\n    Description saved");
@@ -195,8 +196,8 @@ public class FilmDescription extends Film{
 		return indexOfhyperbolic;
 	}
 
-	public int getIndexOfStories() {
-		return indexOfStories;
+	public int getIndexOfStory() {
+		return indexOfStory;
 	}
 
 	public int getIndexOfSubject1() {
@@ -207,8 +208,8 @@ public class FilmDescription extends Film{
 		return indexOfSubject2;
 	}
 
-	public int getIndexOfVerbs() {
-		return indexOfVerbs;
+	public int getIndexOfVerb() {
+		return indexOfVerb;
 	}
 
 	public int getIndexOfLocation() {

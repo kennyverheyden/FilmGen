@@ -12,13 +12,7 @@ FilmGen - Descriptions
 
         6 Genre: Action - A fantastic drama of a forklift driver and John Doe who must find The President of the United States in Morocco
 
-        7 Genre: Sports - An intense documentary of a developer and a high school student who must assassinate a terrorist in a shark tank
+        7 Genre: Travel - An epic reflection of God and a soldier who must sink an AI in Mars
 
-        8 Genre: Travel - An epic reflection of God and a soldier who must sink an AI in Mars
-
-        9 Genre: Travel - A fantastic epistle of The President of the United States and a bodyguard who must battle a high school student in Mars
-
-       10 Genre: Travel - An exciting documentary of a king and a developer who must race against Jan Smit in the Gulf of Mexico
-
-       11 Genre: Travel - An action-packed adventure of a dinosaur and a database administrator who must destroy a knight in the Moon
+        8 Genre: Travel - A fantastic epistle of The President of the United States and a bodyguard who must battle a high school student in Mars
 

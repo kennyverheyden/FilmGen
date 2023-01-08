@@ -12,12 +12,21 @@ FilmGen - Films
         4 Genre: Music - Film: Alternate Man
     Description: An amusing saga of a lumberjack and Jan Smit who must recover a king in the White House
 
-        5 Genre: Travel - Film: Park Alternate
-    Description: An amusing reflection of a frisbee and a soldier who must chase a developer in Morocco
-
-        6 Genre: Travel - Film: Top Final
+        5 Genre: Travel - Film: Top Final
     Description: A fast-paced panorama of Jan Smit and a pilot who must sink a frisbee in Tokyo
 
-        7 Genre: Foreign - Film: Portal Class
+        6 Genre: Foreign - Film: Portal Class
     Description: A magnificent musical of a dwarf and Kabouter Plop who must destroy a knight in the Gulf of Mexico
+
+        7 Genre: Travel - Film: Short Dance
+    Description: An electrifying odyssey of an unstoppable force and a gnome who must destroy Bumba in Tokyo
+
+        8 Genre: Drama - Film: Team Object
+    Description: An intense musical of an eldritch abomination and an alchemist who must chase Mario in Morocco
+
+        9 Genre: Foreign - Film: Beyond Final
+    Description: An astounding reflection of Bumba and a dinosaur who must dance with a lumberjack in Mars
+
+       10 Genre: Travel - Film: Beyond Final
+    Description: An astounding reflection of Bumba and a dinosaur who must dance with a lumberjack in Mars
 

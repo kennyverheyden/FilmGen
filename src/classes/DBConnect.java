@@ -19,7 +19,7 @@ public class DBConnect {
 	Scanner dbInput = new Scanner(System.in);
 
 	// Relative path to database file
-	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite";
+	static String url="jdbc:sqlite:src/resources/FilmGen.sqlite?foreign_keys=on";
 
 	// Constructor
 	public DBConnect(){
@@ -221,7 +221,8 @@ public class DBConnect {
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, str);
 			int row=preparedStatement.executeUpdate();
-			if(row==1)
+			preparedStatement.close();
+			if(row>=1)
 			{
 				return true; 	// Delete success
 			}
@@ -230,8 +231,16 @@ public class DBConnect {
 				return false; 	// Delete unsuccessful
 			}
 
+			//}catch(Exception e){
 		}catch(Exception e){
-			System.out.println(e); // In case of error
+			if(e.hashCode()==873415566)
+			{
+				System.out.println("\n    This value is still used in generated films, titles or descriptions");
+			}
+			else
+			{
+				System.out.println(e);
+			}
 		}
 		return false;
 	}
@@ -265,6 +274,7 @@ public class DBConnect {
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -324,6 +334,7 @@ public class DBConnect {
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, PK);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -340,9 +351,9 @@ public class DBConnect {
 	}
 
 	// Insert Film title, foreign ID, indexes
-	public boolean insertFilmIndex(int indexOfCategory, int indexOfWord1, int indexOfWord2, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubjects2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
+	public boolean insertFilmIndex(int indexOfCategory, int indexOfWord1, int indexOfWord2, int indexOfhyperbolic, int indexOfStory,  int indexOfSubject1, int indexOfSubject2, int indexOfVerb, int indexOfSubject3, int indexOfLocation)
 	{
-		sqlQuery="INSERT INTO main.films (fk_category_id, fk_word_title_id, fk_word_title_id_2, fk_hyperbolic_descrip_id, fk_story_descrip_id, fk_subjects_descrip_id, fk_subjects_descrip_id_2, fk_verb_descrip_id, fk_subjects_descrip_id_3, fk_location_descrip_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		sqlQuery="INSERT INTO main.films (fk_category_id, fk_word_title_id, fk_word_title_id_2, fk_hyperbolic_descrip_id, fk_story_descrip_id, fk_subject_descrip_id, fk_subject_descrip_id_2, fk_verb_descrip_id, fk_subject_descrip_id_3, fk_location_descrip_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
@@ -350,14 +361,14 @@ public class DBConnect {
 			preparedStatement.setInt(2, indexOfWord1);
 			preparedStatement.setInt(3, indexOfWord2);
 			preparedStatement.setInt(4, indexOfhyperbolic);
-			preparedStatement.setInt(5, indexOfStories);
-			preparedStatement.setInt(6, indexOfSubjects1);
-			preparedStatement.setInt(7, indexOfSubjects2);
-			preparedStatement.setInt(8, indexOfVerbs);
+			preparedStatement.setInt(5, indexOfStory);
+			preparedStatement.setInt(6, indexOfSubject1);
+			preparedStatement.setInt(7, indexOfSubject2);
+			preparedStatement.setInt(8, indexOfVerb);
 			preparedStatement.setInt(9, indexOfSubject3);
 			preparedStatement.setInt(10, indexOfLocation);
-
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -374,17 +385,18 @@ public class DBConnect {
 	}
 
 	// Get Film FK, foreign ID, index
-	public ArrayList getFilmForeignKeys()
+	public ArrayList<String> getFilmForeignKeys()
 	{
 		ArrayList<String> TitleForeignKeys = new ArrayList<>();
-		sqlQuery="select film_id, fk_category_id, fk_word_title_id, fk_word_title_id_2, fk_hyperbolic_descrip_id, fk_story_descrip_id, fk_subjects_descrip_id, fk_subjects_descrip_id_2, fk_verb_descrip_id, fk_subjects_descrip_id_3, fk_location_descrip_id from main.films";
+		sqlQuery="select film_id, fk_category_id, fk_word_title_id, fk_word_title_id_2, fk_hyperbolic_descrip_id, fk_story_descrip_id, fk_subject_descrip_id, fk_subject_descrip_id_2, fk_verb_descrip_id, fk_subject_descrip_id_3, fk_location_descrip_id from main.films";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				TitleForeignKeys.add(resultSet.getInt("film_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_word_title_id") +" "+ resultSet.getInt("fk_word_title_id_2") +" " + resultSet.getInt("fk_hyperbolic_descrip_id") +" "+ resultSet.getInt("fk_story_descrip_id") +" "+ resultSet.getInt("fk_subjects_descrip_id") +" "+ resultSet.getInt("fk_subjects_descrip_id_2") +" "+ resultSet.getInt("fk_verb_descrip_id") + " " + resultSet.getInt("fk_subjects_descrip_id_3") +" "+ resultSet.getInt("fk_location_descrip_id") +" ");
+				TitleForeignKeys.add(resultSet.getInt("film_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_word_title_id") +" "+ resultSet.getInt("fk_word_title_id_2") +" " + resultSet.getInt("fk_hyperbolic_descrip_id") +" "+ resultSet.getInt("fk_story_descrip_id") +" "+ resultSet.getInt("fk_subject_descrip_id") +" "+ resultSet.getInt("fk_subject_descrip_id_2") +" "+ resultSet.getInt("fk_verb_descrip_id") + " " + resultSet.getInt("fk_subject_descrip_id_3") +" "+ resultSet.getInt("fk_location_descrip_id") +" ");
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
@@ -396,10 +408,11 @@ public class DBConnect {
 	{
 		sqlQuery="DELETE FROM main.titles WHERE title_id = ?";
 		try{
-			c= DriverManager.getConnection(url);//Establishing Connection
+			c= DriverManager.getConnection(url); //Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, PK);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -426,6 +439,7 @@ public class DBConnect {
 			preparedStatement.setInt(2, indexOfWord1);
 			preparedStatement.setInt(3, indexOfWord2);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -442,7 +456,7 @@ public class DBConnect {
 	}
 
 	// Get Titles FK, foreign ID, index
-	public ArrayList getTitleForeignKeys()
+	public ArrayList<String> getTitleForeignKeys()
 	{
 		ArrayList<String> TitleForeignKeys = new ArrayList<>();
 		sqlQuery="select title_id, fk_category_id, fk_word_id, fk_word_id_2 from main.titles";
@@ -453,6 +467,7 @@ public class DBConnect {
 			while(resultSet.next()){
 				TitleForeignKeys.add(resultSet.getInt("title_id")+" "+resultSet.getInt("fk_category_id") +" "+resultSet.getInt("fk_word_id") +" "+ resultSet.getInt("fk_word_id_2") +" ");
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
@@ -460,18 +475,19 @@ public class DBConnect {
 	}
 
 	// Get Descriptions FK, foreign ID, index
-	public ArrayList getDescriptionForeignKeys()
+	public ArrayList<String> getDescriptionForeignKeys()
 	{
 		ArrayList<String> DescriptionForeignKeys = new ArrayList<>();
-		sqlQuery="select description_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id from main.descriptions";
+		sqlQuery="select description_id, fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subject_id, fk_subject_id_2, fk_verb_id, fk_subject_id_3, fk_location_id from main.descriptions";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				DescriptionForeignKeys.add(resultSet.getInt("description_id")+" "+resultSet.getInt("fk_category_id") +" "+ resultSet.getInt("fk_hyperbolic_id") +" "+ resultSet.getInt("fk_story_id") +" "+ resultSet.getInt("fk_subjects_id") +" "+ resultSet.getInt("fk_subjects_id_2") +" "+ resultSet.getInt("fk_verb_id")
-				+" "+ resultSet.getInt("fk_subjects_id_3") +" "+ resultSet.getInt("fk_location_id"));
+				DescriptionForeignKeys.add(resultSet.getInt("description_id")+" "+resultSet.getInt("fk_category_id") +" "+ resultSet.getInt("fk_hyperbolic_id") +" "+ resultSet.getInt("fk_story_id") +" "+ resultSet.getInt("fk_subject_id") +" "+ resultSet.getInt("fk_subject_id_2") +" "+ resultSet.getInt("fk_verb_id")
+				+" "+ resultSet.getInt("fk_subject_id_3") +" "+ resultSet.getInt("fk_location_id"));
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
@@ -487,6 +503,7 @@ public class DBConnect {
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, PK);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -503,21 +520,22 @@ public class DBConnect {
 	}
 
 	// Insert Film description, foreign ID, indexes
-	public boolean insertDescriptionIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStories,  int indexOfSubjects1, int indexOfSubjects2, int indexOfVerbs, int indexOfSubject3, int indexOfLocation)
+	public boolean insertDescriptionIndex(int indexOfcategory, int indexOfhyperbolic, int indexOfStory,  int indexOfSubject1, int indexOfSubject2, int indexOfVerb, int indexOfSubject3, int indexOfLocation)
 	{
-		sqlQuery="INSERT INTO main.descriptions (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subjects_id, fk_subjects_id_2, fk_verb_id, fk_subjects_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		sqlQuery="INSERT INTO main.descriptions (fk_category_id, fk_hyperbolic_id, fk_story_id, fk_subject_id, fk_subject_id_2, fk_verb_id, fk_subject_id_3, fk_location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, indexOfcategory);
 			preparedStatement.setInt(2, indexOfhyperbolic);
-			preparedStatement.setInt(3, indexOfStories);
-			preparedStatement.setInt(4, indexOfSubjects1);
-			preparedStatement.setInt(5, indexOfSubjects2);
-			preparedStatement.setInt(6, indexOfVerbs);
+			preparedStatement.setInt(3, indexOfStory);
+			preparedStatement.setInt(4, indexOfSubject1);
+			preparedStatement.setInt(5, indexOfSubject2);
+			preparedStatement.setInt(6, indexOfVerb);
 			preparedStatement.setInt(7, indexOfSubject3);
 			preparedStatement.setInt(8, indexOfLocation);
 			int row=preparedStatement.executeUpdate();
+			preparedStatement.close();
 			if(row==1)
 			{
 				return true;
@@ -534,6 +552,43 @@ public class DBConnect {
 	}
 
 	// Getters for DB
+
+	public ArrayList<String> getCategorie_ids()
+	{
+		ArrayList<String> categorie_ids = new ArrayList<>();
+		sqlQuery="select category_id from categories";
+		try{
+			c= DriverManager.getConnection(url);//Establishing Connection
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				categorie_ids.add(resultSet.getString("category_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e){
+			System.out.println("Error in connection");
+		}
+		return(categorie_ids);
+	}
+
+	public String getCategoryByFK(int fk)
+	{
+		String category = null;
+		sqlQuery="select category from categories where category_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			category=resultSet.getString("category");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return category;
+	}
+
 	public ArrayList<String> getCategories()
 	{
 		ArrayList<String> categories = new ArrayList<>();
@@ -546,10 +601,28 @@ public class DBConnect {
 			while(resultSet.next()){
 				categories.add(resultSet.getString("category")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(categories);
+	}
+
+	public String getHyperbolicByFK(int fk)
+	{
+		String hyperbolic = null;
+		sqlQuery="select hyperbolic from hyperbolic where hyperbolic_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			hyperbolic=resultSet.getString("hyperbolic");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return hyperbolic;
 	}
 
 	public ArrayList<String> getHyperbolics()
@@ -564,82 +637,172 @@ public class DBConnect {
 			while(resultSet.next()){
 				hyperbolic.add(resultSet.getString("hyperbolic")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(hyperbolic);
 	}
 
+	public String getLocationByFK(int fk)
+	{
+		String location = null;
+		sqlQuery="select loc from locations where loc_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			location=resultSet.getString("loc");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return location;
+	}
+
 	public ArrayList<String> getLocations()
 	{
 		ArrayList<String> locations = new ArrayList<>();
-		sqlQuery="select locations from locations";
+		sqlQuery="select loc from locations";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				locations.add(resultSet.getString("locations")); 
+				locations.add(resultSet.getString("loc")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(locations);
 	}
 
+	public String getStoryByFK(int fk)
+	{
+		String story = null;
+		sqlQuery="select story from stories where story_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			story=resultSet.getString("story");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return story;
+	}
+
 	public ArrayList<String> getStories()
 	{
 		ArrayList<String> stories = new ArrayList<>();
-		sqlQuery="select stories from stories";
+		sqlQuery="select story from stories";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				stories.add(resultSet.getString("stories")); 
+				stories.add(resultSet.getString("story")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(stories);
 	}
 
+	public String getSubjectByFK(int fk)
+	{
+		String subject = null;
+		sqlQuery="select subject from subjects where subject_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			subject=resultSet.getString("subject");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return subject;
+	}
+
 	public ArrayList<String> getSubjects()
 	{
 		ArrayList<String> subjects = new ArrayList<>();
-		sqlQuery="select subjects from subjects";
+		sqlQuery="select subject from subjects";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				subjects.add(resultSet.getString("subjects")); 
+				subjects.add(resultSet.getString("subject")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(subjects);
 	}
 
+	public String getVerbByFK(int fk)
+	{
+		String verb = null;
+		sqlQuery="select verb from verbs where verb_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			verb=resultSet.getString("verb");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return verb;
+	}
+
 	public ArrayList<String> getVerbs()
 	{
 		ArrayList<String> verbs = new ArrayList<>();
-		sqlQuery="select verbs from verbs";
+		sqlQuery="select verb from verbs";
 		try{
 			c= DriverManager.getConnection(url);//Establishing Connection
 			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
 
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()){
-				verbs.add(resultSet.getString("verbs")); 
+				verbs.add(resultSet.getString("verb")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}
 		return(verbs);
+	}
+
+	public String getWordByFK(int fk)
+	{
+		String word = null;
+		sqlQuery="select word from words where word_id=?";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, fk);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			word=resultSet.getString("word");
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return word;
 	}
 
 	public ArrayList<String> getWords()
@@ -654,6 +817,7 @@ public class DBConnect {
 			while(resultSet.next()){
 				words.add(resultSet.getString("word")); 
 			}
+			resultSet.close();
 		}catch(Exception e){
 			System.out.println("Error in connection");
 		}

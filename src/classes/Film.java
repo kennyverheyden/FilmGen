@@ -17,7 +17,6 @@ public abstract class Film {
 	static DBConnect myDBConnection = new DBConnect();
 
 	// Tables of DB loaded separately in ArrayLists
-	static ArrayList<String> categories = myDBConnection.getCategories();
 	static ArrayList<String> hyperbolics = myDBConnection.getHyperbolics();
 	static ArrayList<String> locations = myDBConnection.getLocations();
 	static ArrayList<String> stories = myDBConnection.getStories();
@@ -30,26 +29,22 @@ public abstract class Film {
 	}
 
 	// Delete item from Title or Description table
-	public void deleteItem(ArrayList<String> keys) {
+	public void deleteItem(ArrayList<Integer> pkList) {
 		System.out.print("\n    Delete item: ");
 		String input=userInput.nextLine(); // Get userChose number
-		int toDelete = Integer.parseInt(input);
-		if(!keys.isEmpty())
+		if(!pkList.isEmpty())
 		{
 			// As long as input is integer
 			// Input choice is not 0, because PK in DB starts from 1
 			// Input choice not bigger than highest PK in DB (Size arrayList)
-			while (!isInteger(input) || toDelete==0 || toDelete>keys.size()) 
+			while (!isInteger(input) || input.equals("0") || Integer.parseInt(input)>pkList.size()) 
 			{
-				System.out.print("\n    Enter a valid number: ");
-				input=userInput.nextLine();		
-				toDelete = Integer.parseInt(input);
-
+				System.out.print("    Enter a valid number: ");
+				input=userInput.nextLine();
 			}
+			int pk = pkList.get((Integer.parseInt(input)-1));
 
-			String[] parts = keys.get((toDelete)-1).split(" "); // SUBTRACT -1 index array // Contains Primary Key on index 0; //
-			int databasePrimaryKey = Integer.parseInt(parts[(0)]); // Read Primary Key on index 0;
-			if(executeDelete(databasePrimaryKey))
+			if(executeDelete(pk))
 			{
 				System.out.println("    Chosen item deleted");
 				pressKeyToContinue();
@@ -69,7 +64,7 @@ public abstract class Film {
 	}
 
 	// Random picker in the ArrayList
-	public int randomPicker(ArrayList obj)
+	public int randomPicker(ArrayList<String> obj)
 	{
 		Random rn = new Random();
 		int randomNum = rn.nextInt(obj.size());
@@ -109,25 +104,27 @@ public abstract class Film {
 		switch(input) {
 		case "1":
 			genre=this.randomGenre();
-			return genre;
+			break;
 		case "2":
 			genre=this.askGenre();
-			return genre;
+			break;
 		default :
 			genre=this.randomGenre();
-			return genre;
+			break;
 		}
+		return Integer.parseInt(myDBConnection.getCategorie_ids().get(genre-1)); // Get PK from categories for foreign key
 	}
 
 	// Ask genre (category)
 	public int askGenre()
 	{
+		ArrayList<String> cat = myDBConnection.getCategories();
 		System.out.println("\n    Assign one of the following genres.");
 		System.out.println("");  // new line
 		System.out.print("   "); // add some spaces before line
-		for(int i=0;i<categories.size();i++)
+		for(int i=0;i<cat.size();i++)
 		{
-			System.out.print(" "+(i+1)+ "="+capitalize(categories.get(i))+" ");
+			System.out.print(" "+(i+1)+ "="+capitalize(cat.get(i))+" ");
 			if(i>3 && i%5==0) {System.out.print("\n   ");}; // add new line for readability
 		}
 		System.out.print("\n    Assign genre number: ");
@@ -143,7 +140,7 @@ public abstract class Film {
 		// As long as input is integer
 		// Input choice is not 0, because PK in DB starts from 1
 		// Input choice not bigger than highest PK in DB (Size arrayList categories)
-		while (!isInteger(input) || userChoiceGenre==0 || userChoiceGenre>categories.size()) {
+		while (!isInteger(input) || userChoiceGenre==0 || userChoiceGenre>cat.size()) {
 			System.out.print("\n    Enter a valid number: ");
 			input = userInput.nextLine();
 			if(isInteger(input)) // Avoid error when user only press enter
@@ -157,13 +154,14 @@ public abstract class Film {
 	// Random genre (category)
 	public int randomGenre()
 	{
+		ArrayList<String> cat = myDBConnection.getCategories();
 		boolean confirmed = false; // check user confirmation
-		int randomGenre = randomPicker(this.getCategories()); // Call method randomPicker for random int
+		int randomGenre = randomPicker(cat); // Call method randomPicker for random int
 		String input;
 		while(!confirmed) // As long as the user not confirmed his choose
 		{
-			randomGenre = randomPicker(this.getCategories());
-			System.out.println("\n    Random genre: "+this.getCategories().get(randomGenre)); // Show random genre
+			randomGenre = randomPicker(cat);
+			System.out.println("\n    Random genre: "+cat.get(randomGenre)); // Show random genre
 			System.out.print("    Would you like to confirm? [y/n]: "); // Ask for confirmation
 			input = userInput.nextLine().toLowerCase();
 			while(!input.equals("y") && !input.equals("n")) // Input validation
@@ -256,9 +254,6 @@ public abstract class Film {
 	}
 
 	// Getters
-	public static ArrayList<String> getCategories() {
-		return categories;
-	}
 
 	public static ArrayList<String> getHyperbolics() {
 		return hyperbolics;

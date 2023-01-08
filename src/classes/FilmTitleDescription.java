@@ -98,15 +98,15 @@ public class FilmTitleDescription extends Film{
 		int indexOfWord1=title.getIndexOfWord();
 		int indexOfWord2=title.getIndexOfWord_2();
 		int indexOfhyperbolic=description.getIndexOfhyperbolic();
-		int indexOfStories=description.getIndexOfStories();
-		int indexOfSubjects1=description.getIndexOfSubject1();
-		int indexOfSubjects2=description.getIndexOfSubject2();
-		int indexOfVerbs=description.getIndexOfVerbs();
+		int indexOfStory=description.getIndexOfStory();
+		int indexOfSubject1=description.getIndexOfSubject1();
+		int indexOfSubject2=description.getIndexOfSubject2();
+		int indexOfVerb=description.getIndexOfVerb();
 		int indexOfSubject3=description.getIndexOfSubject3();
 		int indexOfLocation=description.getIndexOfLocation();
 
 		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
-		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, indexOfWord1+1, indexOfWord2+1, indexOfhyperbolic+1, indexOfStories+1, indexOfSubjects1+1, indexOfSubjects2+1, indexOfVerbs+1, indexOfSubject3+1, indexOfLocation+1);
+		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, indexOfWord1+1, indexOfWord2+1, indexOfhyperbolic+1, indexOfStory+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerb+1, indexOfSubject3+1, indexOfLocation+1);
 		if(success)
 		{
 			System.out.println("\n    Film saved");
@@ -125,27 +125,28 @@ public class FilmTitleDescription extends Film{
 		ArrayList<String> keys = myDBConnection.getFilmForeignKeys(); // Contains Primary Key and foreign keys from database
 		ArrayList<String> films = new ArrayList<>(); // Here we will store the merged film titles and descriptions
 		FilmTitleDescription filmTitleDes = new FilmTitleDescription(); //Create obj for calling delete method in parent class
+		ArrayList<Integer> pkListFilm = new ArrayList<Integer>(); // Here we store primary keys for the delete option
 		// Merge
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" "); // Retrieve a record and split to array by space
+			String[] parts = keys.get(i).split(" "); 	// Retrieve a record and split to array by space
+			pkListFilm.add(Integer.parseInt(parts[0])); 	// Primary key
 
 			// Here we merge to one complete film in template
-			// We get the keywords from the other ArrayList getters from the fields, which are already connected to the DB
 			// The index number is the foreign key number stored in the parts array
 
-			String genre= getCategories().get(Integer.parseInt((parts[1]))-1).toLowerCase();
-			String word1 = getWords().get(Integer.parseInt((parts[2]))-1).toLowerCase();;
-			String word2=getWords().get(Integer.parseInt((parts[3]))-1);
-			String hyperbolic=getHyperbolics().get(Integer.parseInt((parts[4]))-1);
-			String stories=getStories().get(Integer.parseInt((parts[5]))-1);
-			String subject1=getSubjects().get(Integer.parseInt((parts[6]))-1);
-			String subject2=getSubjects().get(Integer.parseInt((parts[7]))-1);
-			String verb=getVerbs().get(Integer.parseInt((parts[8]))-1);
-			String subject3=getSubjects().get(Integer.parseInt((parts[9]))-1);
-			String location=getLocations().get(Integer.parseInt((parts[10]))-1);
+			String genre=capitalize(myDBConnection.getCategoryByFK(Integer.parseInt(parts[1])));
+			String word1=capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[2])));
+			String word2=capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[3])));
+			String hyperbolic=myDBConnection.getHyperbolicByFK(Integer.parseInt(parts[4]));
+			String story=myDBConnection.getStoryByFK(Integer.parseInt(parts[5]));
+			String subject1=myDBConnection.getSubjectByFK(Integer.parseInt(parts[6]));
+			String subject2=myDBConnection.getSubjectByFK(Integer.parseInt(parts[7]));
+			String verb=myDBConnection.getVerbByFK(Integer.parseInt(parts[8]));
+			String subject3=myDBConnection.getSubjectByFK(Integer.parseInt(parts[9]));
+			String location=myDBConnection.getLocationByFK(Integer.parseInt(parts[10]));
 			// Merge
-			String mergedFilm=String.format("    %5d Genre: "+ capitalize(genre) + " - Film: "+ capitalize(word1) +" "+ capitalize(word2) + "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ stories +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location, (i+1)); 
+			String mergedFilm=String.format("    %5d Genre: "+genre+" - Film: "+ word1 +" "+word2+ "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ story +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location, (i+1)); 
 			films.add(mergedFilm); // Add film to ArrayList
 		}
 
@@ -182,7 +183,7 @@ public class FilmTitleDescription extends Film{
 		userChoice=userInput.nextLine().toLowerCase();
 		switch(userChoice) {
 		case "1":
-			filmTitleDes.deleteItem(keys);
+			filmTitleDes.deleteItem(pkListFilm);
 			break;
 		case "2":
 			writeToFile(objName,films);
