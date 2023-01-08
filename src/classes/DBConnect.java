@@ -45,6 +45,7 @@ public class DBConnect {
 	public void databaseView() throws SQLException
 	{
 		String userChoice="0";
+		String name="null"; // Used for table title
 		do
 		{
 			System.out.println("");
@@ -63,31 +64,38 @@ public class DBConnect {
 			userChoice=dbInput.nextLine().toLowerCase();
 			switch(userChoice) {
 			case "1":
-				readTable(getWords());
+				name = "Stored words";
+				readTable(getWords(),name);
 				showEditOptions("words","word");  				// Parameters tableName, columnName
 				break;
 			case "2":
-				readTable(getVerbs());
+				name = "Stored verbs";
+				readTable(getVerbs(),name);
 				showEditOptions("verbs","verbs"); 				// Parameters tableName, columnName
 				break;
 			case "3":
-				readTable(getSubjects());
+				name = "Stored subjects";
+				readTable(getSubjects(),name);
 				showEditOptions("subjects","subjects"); 		// Parameters tableName, columnName
 				break;
 			case "4":
-				readTable(getStories());
+				name = "Stored stories";
+				readTable(getStories(),name);
 				showEditOptions("stories","stories"); 			// Parameters tableName, columnName
 				break;
 			case "5":
-				readTable(getLocations());
+				name = "Stored locations";
+				readTable(getLocations(),name);
 				showEditOptions("locations","locations"); 		// Parameters tableName, columnName
 				break;
 			case "6":
-				readTable(getHyperbolics());
+				name = "Stored hyperbolics";
+				readTable(getHyperbolics(),name);
 				showEditOptions("hyperbolic","hyperbolic"); 	// Parameters tableName, columnName
 				break;
 			case "7":
-				readTable(getCategories());
+				name = "Stored genres";
+				readTable(getCategories(),name);
 				showEditOptions("categories","category"); 		// Parameters tableName, columnName
 				break;
 			default :
@@ -293,8 +301,11 @@ public class DBConnect {
 	}
 
 	// Read records of a table (ArrayList getters)
-	private void readTable(ArrayList<String> table)
+	private void readTable(ArrayList<String> table, String name)
 	{
+		Film.printFormattingLine(name.length()+1);
+		System.out.println("    "+name);
+		Film.printFormattingLine(name.length()+1);
 		System.out.print("\n    | "); // Formatting
 		for(int i=0;i<table.size();i++)
 		{

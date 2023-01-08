@@ -121,19 +121,19 @@ public class FilmTitleDescription extends Film{
 	public void readStoredTitleDescription()
 	{
 
-		ArrayList<String> keys = myDBConnection.getFilmForeignKeys(); // Contains Primary Key and foreign keys from database
-		ArrayList<String> films = new ArrayList<>(); // Here we will store the merged film titles and descriptions
-		FilmTitleDescription filmTitleDes = new FilmTitleDescription(); //Create obj for calling delete method in parent class
-		ArrayList<Integer> pkListFilm = new ArrayList<Integer>(); // Here we store primary keys for the delete option
+		ArrayList<String> keys = myDBConnection.getFilmForeignKeys();  	// Contains Primary Key and foreign keys from database
+		ArrayList<String> films = new ArrayList<>(); 					// Here we will store the merged film titles and descriptions
+		ArrayList<String> titles = new ArrayList<>();					// Here we will store the merged titles only, we use this for formatting (title length for line)
+		FilmTitleDescription filmTitleDes = new FilmTitleDescription(); // Create obj for calling delete method in parent class
+		ArrayList<Integer> pkListFilm = new ArrayList<Integer>(); 		// Here we store primary keys for the delete option
 		// Merge
 		for(int i=0;i<keys.size();i++)
 		{
-			String[] parts = keys.get(i).split(" "); 	// Retrieve a record and split to array by space
+			String[] parts = keys.get(i).split(" "); 		// Retrieve a record and split to array by space
 			pkListFilm.add(Integer.parseInt(parts[0])); 	// Primary key
 
 			// Here we merge to one complete film in template
 			// The index number is the foreign key number stored in the parts array
-
 			String genre=capitalize(myDBConnection.getCategoryByFK(Integer.parseInt(parts[1])));
 			String word1=capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[2])));
 			String word2=capitalize(myDBConnection.getWordByFK(Integer.parseInt(parts[3])));
@@ -145,8 +145,10 @@ public class FilmTitleDescription extends Film{
 			String subject3=myDBConnection.getSubjectByFK(Integer.parseInt(parts[9]));
 			String location=myDBConnection.getLocationByFK(Integer.parseInt(parts[10]));
 			// Merge
-			String mergedFilm=String.format("    %5d Genre: "+genre+" - Film: "+ word1 +" "+word2+ "\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ story +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location, (i+1)); 
+			String mergedTitle=String.format("Genre: "+genre+" - Film: "+ word1 +" "+word2);
+			String mergedFilm=String.format("    %5d "+ mergedTitle+"\n    Description: "+ capitalize(articleWord(hyperbolic)) +" " + hyperbolic +" "+ story +" of "+ subject1 +" and "+ subject2 + " who must "+ verb + " " + subject3 + " in " + location,(i+1)); 
 			films.add(mergedFilm); // Add film to ArrayList
+			titles.add(mergedTitle); // For formatting to know the length of the title for the divider line
 		}
 
 		// Print the films from the ArrayList
@@ -164,10 +166,10 @@ public class FilmTitleDescription extends Film{
 		{
 			if(i==0)
 			{
-				printFormattingLine(films.get(i).length());		// Add line to the screen
+				printFormattingLine((films.get(i).length()-titles.get(i).length())-12);		// Add line to the screen
 			}
 			System.out.println(films.get(i));
-			printFormattingLine(films.get(i).length());			// Add line to the screen
+			printFormattingLine((films.get(i).length()-titles.get(i).length())-12);			// Add line to the screen
 
 		}
 		System.out.println("");
