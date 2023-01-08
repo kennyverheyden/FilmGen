@@ -94,19 +94,18 @@ public class FilmTitleDescription extends Film{
 		// Ask genre to assign
 		int userChoiceGenre=assignGenre();
 
-		// Get indexes from object instances
-		int indexOfWord1=title.getIndexOfWord();
-		int indexOfWord2=title.getIndexOfWord_2();
-		int indexOfhyperbolic=description.getIndexOfhyperbolic();
-		int indexOfStory=description.getIndexOfStory();
-		int indexOfSubject1=description.getIndexOfSubject1();
-		int indexOfSubject2=description.getIndexOfSubject2();
-		int indexOfVerb=description.getIndexOfVerb();
-		int indexOfSubject3=description.getIndexOfSubject3();
-		int indexOfLocation=description.getIndexOfLocation();
+		// Get foreig key from object instances
+		int fkOfWord1=title.getfkOfWord();
+		int fkOfWord2=title.getfkOfWord_2();
+		int fkOfhyperbolic=description.getfkOfhyperbolic();
+		int fkOfStory=description.getfkOfStory();
+		int fkOfSubject1=description.getfkOfSubject1();
+		int fkOfSubject2=description.getfkOfSubject2();
+		int fkOfVerb=description.getfkOfVerb();
+		int fkOfSubject3=description.getfkOfSubject3();
+		int fkOfLocation=description.getfkOfLocation();
 
-		// Add +1 to index because array starts from 0; foreign keys in DB starts from 1
-		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, indexOfWord1+1, indexOfWord2+1, indexOfhyperbolic+1, indexOfStory+1, indexOfSubject1+1, indexOfSubject2+1, indexOfVerb+1, indexOfSubject3+1, indexOfLocation+1);
+		boolean success=myDBConnection.insertFilmIndex(userChoiceGenre, fkOfWord1, fkOfWord2, fkOfhyperbolic, fkOfStory, fkOfSubject1, fkOfSubject2, fkOfVerb, fkOfSubject3, fkOfLocation);
 		if(success)
 		{
 			System.out.println("\n    Film saved");

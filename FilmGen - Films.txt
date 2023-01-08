@@ -30,3 +30,12 @@ FilmGen - Films
        10 Genre: Travel - Film: Beyond Final
     Description: An astounding reflection of Bumba and a dinosaur who must dance with a lumberjack in Mars
 
+       11 Genre: Drama - Film: Avatar Violence
+    Description: An astounding reflection of a tank and a dinosaur who must chase a dinosaur in Tokyo
+
+       12 Genre: Action - Film: Fortress Penguin
+    Description: A breathtaking reflection of a taxi driver and an unstoppable force who must sink an unstoppable force in the Moon
+
+       13 Genre: Comedy - Film: Arena Integer
+    Description: An intrepid documentary of a high school student and a bodyguard who must duel with a bodyguard in Brazil
+

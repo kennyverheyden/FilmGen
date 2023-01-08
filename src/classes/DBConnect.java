@@ -44,52 +44,57 @@ public class DBConnect {
 	// View or edit stored data in database
 	public void databaseView() throws SQLException
 	{
-		String userChoice;
-		System.out.println("");
-		System.out.println("    Choose a table:");
-		System.out.println("    [1] Words");
-		System.out.println("    [2] Verbs");
-		System.out.println("    [3] Subjects");
-		System.out.println("    [4] Stories");
-		System.out.println("    [5] Locations");
-		System.out.println("    [6] Hyperbolics");
-		System.out.println("    [7] Genres");
-		System.out.println("\n    Press just enter for main menu");
-		System.out.println("");
-		System.out.print("    Choice: ");
-		userChoice=dbInput.nextLine().toString();
-		switch(userChoice) {
-		case "1":
-			readTable(getWords());
-			showEditOptions("words","word");  				// Parameters tableName, columnName
-			break;
-		case "2":
-			readTable(getVerbs());
-			showEditOptions("verbs","verbs"); 				// Parameters tableName, columnName
-			break;
-		case "3":
-			readTable(getSubjects());
-			showEditOptions("subjects","subjects"); 		// Parameters tableName, columnName
-			break;
-		case "4":
-			readTable(getStories());
-			showEditOptions("stories","stories"); 			// Parameters tableName, columnName
-			break;
-		case "5":
-			readTable(getLocations());
-			showEditOptions("locations","locations"); 		// Parameters tableName, columnName
-			break;
-		case "6":
-			readTable(getHyperbolics());
-			showEditOptions("hyperbolic","hyperbolic"); 	// Parameters tableName, columnName
-			break;
-		case "7":
-			readTable(getCategories());
-			showEditOptions("categories","category"); 		// Parameters tableName, columnName
-			break;
-		default :
-			break;
+		String userChoice="0";
+		do
+		{
+			System.out.println("");
+			System.out.println("    Choose a table:");
+			System.out.println("    [1] Words");
+			System.out.println("    [2] Verbs");
+			System.out.println("    [3] Subjects");
+			System.out.println("    [4] Stories");
+			System.out.println("    [5] Locations");
+			System.out.println("    [6] Hyperbolics");
+			System.out.println("    [7] Genres");
+			System.out.println(" ");
+			System.out.println("    Press enter for main menu");
+			System.out.println("");
+			System.out.print("    Choice: ");
+			userChoice=dbInput.nextLine().toLowerCase();
+			switch(userChoice) {
+			case "1":
+				readTable(getWords());
+				showEditOptions("words","word");  				// Parameters tableName, columnName
+				break;
+			case "2":
+				readTable(getVerbs());
+				showEditOptions("verbs","verbs"); 				// Parameters tableName, columnName
+				break;
+			case "3":
+				readTable(getSubjects());
+				showEditOptions("subjects","subjects"); 		// Parameters tableName, columnName
+				break;
+			case "4":
+				readTable(getStories());
+				showEditOptions("stories","stories"); 			// Parameters tableName, columnName
+				break;
+			case "5":
+				readTable(getLocations());
+				showEditOptions("locations","locations"); 		// Parameters tableName, columnName
+				break;
+			case "6":
+				readTable(getHyperbolics());
+				showEditOptions("hyperbolic","hyperbolic"); 	// Parameters tableName, columnName
+				break;
+			case "7":
+				readTable(getCategories());
+				showEditOptions("categories","category"); 		// Parameters tableName, columnName
+				break;
+			default :
+				break;
+			}
 		}
+		while(!userChoice.equals(""));
 		System.out.println("");
 	}
 
@@ -99,7 +104,7 @@ public class DBConnect {
 		String userChoice;
 		System.out.println("    [1] Insert data");
 		System.out.println("    [2] Delete data");
-		System.out.println("\n    Press just enter for main menu");
+		System.out.println("\n    Press enter for back");
 		System.out.println("");
 		System.out.print("    Choice: ");
 		userChoice=dbInput.nextLine().toString();
@@ -230,10 +235,8 @@ public class DBConnect {
 			{
 				return false; 	// Delete unsuccessful
 			}
-
-			//}catch(Exception e){
 		}catch(Exception e){
-			if(e.hashCode()==873415566)
+			if(e.getLocalizedMessage().equals("[SQLITE_CONSTRAINT_TRIGGER] A RAISE function within a trigger fired, causing the SQL statement to abort (FOREIGN KEY constraint failed)"))
 			{
 				System.out.println("\n    This value is still used in generated films, titles or descriptions");
 			}
@@ -553,6 +556,7 @@ public class DBConnect {
 
 	// Getters for DB
 
+	// Get Category (genre) all foreign keys
 	public ArrayList<String> getCategorie_ids()
 	{
 		ArrayList<String> categorie_ids = new ArrayList<>();
@@ -572,6 +576,7 @@ public class DBConnect {
 		return(categorie_ids);
 	}
 
+	// Get Category (genre) specific value by foreign key
 	public String getCategoryByFK(int fk)
 	{
 		String category = null;
@@ -589,6 +594,7 @@ public class DBConnect {
 		return category;
 	}
 
+	// Get Category (genre) values
 	public ArrayList<String> getCategories()
 	{
 		ArrayList<String> categories = new ArrayList<>();
@@ -608,6 +614,26 @@ public class DBConnect {
 		return(categories);
 	}
 
+	// Get Hyperbolic all foreign keys
+	public ArrayList<String> getHyperbolic_fks()
+	{
+		ArrayList<String> hyperbolic_fks = new ArrayList<String>();
+		sqlQuery="select hyperbolic_id from hyperbolic";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				hyperbolic_fks.add(resultSet.getString("hyperbolic_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return hyperbolic_fks;
+	}
+
+	// Get Hyperbolic specific value by foreign key
 	public String getHyperbolicByFK(int fk)
 	{
 		String hyperbolic = null;
@@ -625,6 +651,7 @@ public class DBConnect {
 		return hyperbolic;
 	}
 
+	// Get Hyperbolic values
 	public ArrayList<String> getHyperbolics()
 	{
 		ArrayList<String> hyperbolic = new ArrayList<>();
@@ -644,6 +671,26 @@ public class DBConnect {
 		return(hyperbolic);
 	}
 
+	// Get Location all foreign keys
+	public ArrayList<String> getLocations_fks()
+	{
+		ArrayList<String> location_fks = new ArrayList<String>();
+		sqlQuery="select loc_id from locations";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				location_fks.add(resultSet.getString("loc_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return location_fks;
+	}
+
+	// Get Location specific value by foreign key
 	public String getLocationByFK(int fk)
 	{
 		String location = null;
@@ -661,6 +708,7 @@ public class DBConnect {
 		return location;
 	}
 
+	// Get Location values
 	public ArrayList<String> getLocations()
 	{
 		ArrayList<String> locations = new ArrayList<>();
@@ -680,6 +728,26 @@ public class DBConnect {
 		return(locations);
 	}
 
+	// Get Story all foreign keys
+	public ArrayList<String> getStory_fks()
+	{
+		ArrayList<String> story_fks = new ArrayList<String>();
+		sqlQuery="select story_id from stories";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				story_fks.add(resultSet.getString("story_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return story_fks;
+	}
+
+	// Get Story specific value by foreign key
 	public String getStoryByFK(int fk)
 	{
 		String story = null;
@@ -697,6 +765,7 @@ public class DBConnect {
 		return story;
 	}
 
+	// Get Story values
 	public ArrayList<String> getStories()
 	{
 		ArrayList<String> stories = new ArrayList<>();
@@ -716,6 +785,26 @@ public class DBConnect {
 		return(stories);
 	}
 
+	// Get Subject all foreign keys
+	public ArrayList<String> getSubject_fks()
+	{
+		ArrayList<String> subject_fks = new ArrayList<String>();
+		sqlQuery="select subject_id from subjects";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				subject_fks.add(resultSet.getString("subject_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return subject_fks;
+	}
+
+	// Get Subject specific value by foreign key
 	public String getSubjectByFK(int fk)
 	{
 		String subject = null;
@@ -733,6 +822,7 @@ public class DBConnect {
 		return subject;
 	}
 
+	// Get Subject values
 	public ArrayList<String> getSubjects()
 	{
 		ArrayList<String> subjects = new ArrayList<>();
@@ -752,6 +842,26 @@ public class DBConnect {
 		return(subjects);
 	}
 
+	// Get Verb all foreign keys
+	public ArrayList<String> getVerb_fks()
+	{
+		ArrayList<String> verb_fks = new ArrayList<String>();
+		sqlQuery="select verb_id from verbs";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				verb_fks.add(resultSet.getString("verb_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return verb_fks;
+	}
+
+	// Get Verb specific value by foreign key
 	public String getVerbByFK(int fk)
 	{
 		String verb = null;
@@ -769,6 +879,7 @@ public class DBConnect {
 		return verb;
 	}
 
+	// Get Verb values
 	public ArrayList<String> getVerbs()
 	{
 		ArrayList<String> verbs = new ArrayList<>();
@@ -788,6 +899,26 @@ public class DBConnect {
 		return(verbs);
 	}
 
+	// Get Word all foreign keys
+	public ArrayList<String> getWord_fks()
+	{
+		ArrayList<String> word_fks = new ArrayList<String>();
+		sqlQuery="select word_id from words";
+		try {
+			c=DriverManager.getConnection(url);
+			PreparedStatement preparedStatement=c.prepareStatement(sqlQuery);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			while(resultSet.next()){
+				word_fks.add(resultSet.getString("word_id")); 
+			}
+			resultSet.close();
+		}catch(Exception e) {
+			System.out.println("Error in connection");
+		}
+		return word_fks;
+	}
+
+	// Get Word specific value by foreign key
 	public String getWordByFK(int fk)
 	{
 		String word = null;
@@ -805,6 +936,7 @@ public class DBConnect {
 		return word;
 	}
 
+	// Get Word values
 	public ArrayList<String> getWords()
 	{
 		ArrayList<String> words = new ArrayList<>();

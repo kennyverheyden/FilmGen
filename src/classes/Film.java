@@ -74,12 +74,12 @@ public abstract class Film {
 	// Dynamic line
 	public static void printFormattingLine(int length) // Take e.g string.length() 
 	{
-		System.out.print("    "); // Formatting: add extra space before line
-		for(int i=0;i<length-1;i++)  // Extend dynamic the line as long as the string
+		System.out.print("    "); 		// Formatting: add extra space before line
+		for(int i=0;i<length-1;i++)  	// Extend dynamic the line as long as the string
 		{
 			System.out.print("-");	
 		}
-		System.out.println(); // New line
+		System.out.println(); 			// New line
 	}
 
 	// Ask random genre (category) or choose a genre
@@ -155,16 +155,16 @@ public abstract class Film {
 	public int randomGenre()
 	{
 		ArrayList<String> cat = myDBConnection.getCategories();
-		boolean confirmed = false; // check user confirmation
-		int randomGenre = randomPicker(cat); // Call method randomPicker for random int
+		boolean confirmed = false; 				// check user confirmation
+		int randomGenre = randomPicker(cat);	// Call method randomPicker for random int
 		String input;
-		while(!confirmed) // As long as the user not confirmed his choose
+		while(!confirmed) // As long as the user not confirmed his choice
 		{
 			randomGenre = randomPicker(cat);
-			System.out.println("\n    Random genre: "+cat.get(randomGenre)); // Show random genre
-			System.out.print("    Would you like to confirm? [y/n]: "); // Ask for confirmation
+			System.out.println("\n    Random genre: "+cat.get(randomGenre)); 	// Show random genre
+			System.out.print("    Would you like to confirm? [y/n]: "); 		// Ask for confirmation
 			input = userInput.nextLine().toLowerCase();
-			while(!input.equals("y") && !input.equals("n")) // Input validation
+			while(!input.equals("y") && !input.equals("n")) 					// Input validation
 			{
 				System.out.print("    Invalid input. Enter y or n: ");
 				input = userInput.nextLine();
@@ -251,32 +251,6 @@ public abstract class Film {
 	public static void closeScanner()
 	{
 		userInput.close();
-	}
-
-	// Getters
-
-	public static ArrayList<String> getHyperbolics() {
-		return hyperbolics;
-	}
-
-	public static ArrayList<String> getLocations() {
-		return locations;
-	}
-
-	public static ArrayList<String> getStories() {
-		return stories;
-	}
-
-	public static ArrayList<String> getSubjects() {
-		return subjects;
-	}
-
-	public static ArrayList<String> getVerbs() {
-		return verbs;
-	}
-
-	public static ArrayList<String> getWords() {
-		return words;
 	}
 
 }
