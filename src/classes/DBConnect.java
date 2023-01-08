@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,7 +41,7 @@ public class DBConnect {
 	//	}
 
 	// View or edit stored data in database
-	public void databaseView() throws SQLException
+	public void databaseView()
 	{
 		String userChoice="0";
 		String name="null"; // Used for table title

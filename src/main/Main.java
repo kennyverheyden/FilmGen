@@ -1,8 +1,6 @@
 package main;
 
-import java.sql.SQLException;
 import java.util.Scanner;
-
 import classes.DBConnect;
 import classes.Film;
 import classes.FilmDescription;
@@ -72,11 +70,7 @@ public class Main {
 				dbConnect.databaseStats();				// Show database statistics
 				break;
 			case "8": 									
-				try {
 					dbConnect.databaseView(); 			// View or edit the database
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 				break;
 			case "q":
 				exitProgram = true;			// Quit program

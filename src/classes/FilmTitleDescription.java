@@ -94,7 +94,7 @@ public class FilmTitleDescription extends Film{
 		// Ask genre to assign
 		int userChoiceGenre=assignGenre();
 
-		// Get foreig key from object instances
+		// Get foreign key from object instances
 		int fkOfWord1=title.getfkOfWord();
 		int fkOfWord2=title.getfkOfWord_2();
 		int fkOfhyperbolic=description.getfkOfhyperbolic();
