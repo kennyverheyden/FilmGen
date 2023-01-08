@@ -82,6 +82,20 @@ public abstract class Film {
 		System.out.println(); 			// New line
 	}
 
+	// Dynamic line - Get size for line by largest word length in ArrayList
+	public static int getSizeLargestWord(ArrayList<String> list)
+	{
+		int size=0; // Store length of largest word
+		for(int i=0;i<list.size();i++)  	
+		{
+			if(list.get(i).length()>size) // Read ArrayList and get length of each String
+			{
+				size=list.get(i).length();
+			}
+		}
+		return size;
+	}
+
 	// Ask random genre (category) or choose a genre
 	public int assignGenre()
 	{

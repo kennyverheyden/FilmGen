@@ -94,10 +94,12 @@ public class FilmTitle extends Film{
 		{
 			if(i==0)
 			{
-				printFormattingLine(titles.get(i).length()); // Add line to the screen
+				// Dynamic line - Get size for line by largest word length in ArrayList
+				printFormattingLine(getSizeLargestWord(titles)-1);
 			}
 			System.out.println(titles.get(i));
-			printFormattingLine(titles.get(i).length()); // Add line to the screen
+			// Dynamic line - Get size for line by largest word length in ArrayList
+			printFormattingLine(getSizeLargestWord(titles)-1);
 
 		}
 		System.out.println("");
